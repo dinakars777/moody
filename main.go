@@ -17,7 +17,7 @@ import (
 )
 
 var (
-	version = "0.1.0"
+	version = "1.1.0"
 )
 
 func main() {
@@ -33,6 +33,9 @@ func main() {
 	noUSB := flag.Bool("no-usb", false, "Disable USB sensor")
 	noPower := flag.Bool("no-power", false, "Disable power/battery sensor")
 	noLid := flag.Bool("no-lid", false, "Disable lid sensor")
+	noWiFi := flag.Bool("no-wifi", false, "Disable WiFi sensor")
+	noHeadphones := flag.Bool("no-headphones", false, "Disable headphone sensor")
+	silent := flag.Bool("silent", false, "Disable TTS audio (text output only)")
 	verbose := flag.Bool("verbose", false, "Log all sensor events to stderr")
 	listSensors := flag.Bool("list-sensors", false, "List detected sensors and exit")
 	showPacks := flag.Bool("packs", false, "List installed voice packs and exit")
@@ -111,6 +114,12 @@ Examples:
 	if !*noLid {
 		allSensors = append(allSensors, sensors.NewLid())
 	}
+	if !*noWiFi {
+		allSensors = append(allSensors, sensors.NewWiFi())
+	}
+	if !*noHeadphones {
+		allSensors = append(allSensors, sensors.NewHeadphones())
+	}
 
 	if *listSensors {
 		fmt.Println("Available sensors:")
@@ -137,6 +146,10 @@ Examples:
 	// Initialize mood engine
 	engine := mood.NewEngine()
 	defer engine.Shutdown()
+
+	// Initialize audio player (TTS)
+	player := voice.NewPlayer(!*mute && !*silent)
+	defer player.Stop()
 
 	// Event channel
 	events := make(chan mood.HardwareEvent, 32)
@@ -188,7 +201,7 @@ Examples:
 		if *dashboard && dashTicker != nil {
 			select {
 			case evt := <-events:
-				processEvent(engine, voiceMgr, dash, evt, *mute, *verbose)
+				processEvent(engine, voiceMgr, player, dash, evt, *mute, *verbose)
 			case <-dashTicker.C:
 				fmt.Print(dash.Render())
 			case <-sigCh:
@@ -198,7 +211,7 @@ Examples:
 		} else {
 			select {
 			case evt := <-events:
-				processEvent(engine, voiceMgr, nil, evt, *mute, *verbose)
+				processEvent(engine, voiceMgr, player, nil, evt, *mute, *verbose)
 			case <-sigCh:
 				shutdown(engine, allSensors)
 				return
@@ -207,7 +220,7 @@ Examples:
 	}
 }
 
-func processEvent(engine *mood.Engine, voiceMgr *voice.Manager, dash *tui.Dashboard, evt mood.HardwareEvent, mute, verbose bool) {
+func processEvent(engine *mood.Engine, voiceMgr *voice.Manager, player *voice.Player, dash *tui.Dashboard, evt mood.HardwareEvent, mute, verbose bool) {
 	// Update mood
 	moodLabel := engine.ProcessEvent(evt)
 
@@ -225,8 +238,13 @@ func processEvent(engine *mood.Engine, voiceMgr *voice.Manager, dash *tui.Dashbo
 		m := engine.CurrentMood()
 		// Color-code the output based on mood
 		color := moodColor(moodLabel)
-		fmt.Printf("%s %s %s: %s%s\n", m.Emoji(), color,
+		fmt.Printf("%s %s%s: %s%s\n", m.Emoji(), color,
 			strings.ToUpper(string(moodLabel)), line, "\033[0m")
+
+		// Speak it out loud via TTS
+		if player != nil {
+			player.Speak(line, moodLabel)
+		}
 	}
 
 	// Update dashboard

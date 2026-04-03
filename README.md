@@ -48,6 +48,9 @@ sudo moody --min-amplitude 0.15
 # Fast mode (quicker detection, shorter cooldown)
 sudo moody --fast
 
+# Silent mode (disables TTS voice, text only)
+sudo moody --silent
+
 # Verbose logging
 sudo moody --verbose
 ```
@@ -62,9 +65,11 @@ sudo moody --verbose
 
 1. Reads accelerometer data via IOKit HID to detect physical impacts
 2. Monitors USB, power, battery, and lid state via IOKit
-3. Maintains a 3-axis mood engine (happiness, energy, trust)
-4. Mood persists to `~/.moody/state.json` — your MacBook remembers
-5. Selects personality-appropriate responses based on current mood
+3. Monitors WiFi and Headphone connections using `networksetup` and `CoreAudio`
+4. Maintains a 3-axis mood engine (happiness, energy, trust)
+5. Mood persists to `~/.moody/state.json` — your MacBook remembers
+6. Selects personality-appropriate responses based on current mood
+7. Speaks the response aloud using macOS Text-to-Speech (TTS) with mood-specific voices
 
 ## The Mood System
 
@@ -100,6 +105,7 @@ sudo moody --spicy
 | `--pack <NAME>` | Use specific voice pack |
 | `--dashboard` | Show live TUI mood dashboard |
 | `--mute` | Track mood without responses |
+| `--silent` | Disable TTS audio (text output only) |
 | `--fast` | Faster polling, shorter cooldown |
 | `--min-amplitude <F>` | Accelerometer sensitivity (default: 0.05) |
 | `--cooldown <MS>` | Min ms between responses (default: 750) |
@@ -107,6 +113,8 @@ sudo moody --spicy
 | `--no-usb` | Disable USB sensor |
 | `--no-power` | Disable power sensor |
 | `--no-lid` | Disable lid sensor |
+| `--no-wifi` | Disable WiFi sensor |
+| `--no-headphones` | Disable headphone sensor |
 | `--verbose` | Log all events |
 | `--list-sensors` | Show available sensors |
 | `--packs` | List voice packs |
@@ -115,8 +123,7 @@ sudo moody --spicy
 
 Contributions welcome! Especially:
 - [ ] More voice packs (languages, personalities)
-- [ ] Audio playback (TTS or embedded MP3s)
-- [ ] WiFi and display sensors
+- [ ] Display sensors
 - [ ] Gordon Ramsay voice pack
 - [ ] HAL 9000 voice pack
 
