@@ -417,7 +417,7 @@ func (m *Manager) loadBuiltinJapaneseSpicy() {
 		Version:     "1.0.0",
 		Author:      "moody-team",
 		NSFW:        true,
-		Description: "Your MacBook is your little sister. Viewer discretion advised.",
+		Description: "Your MacBook is your clingy anime girlfriend. Viewer discretion advised.",
 		Lines: map[string]map[mood.MoodLabel][]string{
 			"slap": {
 				mood.MoodHappy:      {"やめてください！", "あんっ！", "もっと強くして〜", "痛いけど…好き！", "もっと！"},
