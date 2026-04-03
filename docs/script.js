@@ -51,16 +51,21 @@ function playAudio(pack, eventName) {
         currentAudio.currentTime = 0;
     }
     
-    // Default to the 0th index audio file for simplicity in this demo
-    const src = `audio/${pack}/slap/0.mp3`.replace('slap', eventName); 
-    // Fallback logic simply handles basic files we copied over (charger_in, charger_out, slap)
-    
-    let audioSrc = `audio/${pack}/${eventName}/0.mp3`;
+    let audioSrc = `audio/${pack}/audio/${eventName}/0.mp3`;
+    if (pack === "en_gordon") {
+        audioSrc = `audio/${pack}/${eventName}/0.mp3`;
+    }
+    if (pack === "en_spicy" && eventName === "slap") {
+        audioSrc = `audio/${pack}/audio/${eventName}/00.mp3`;
+    }
 
     // Attempt to play
     currentAudio = new Audio(audioSrc);
-    currentAudio.play().catch(e => {
-        logResponseEl.innerText = "[Audio file playing fallback] *audio unavailable in demo UI*";
+    currentAudio.play().then(() => {
+        // Success
+    }).catch(e => {
+        console.error(e);
+        logResponseEl.innerText += " [Audio File Not Found In Demo]";
     });
 }
 
