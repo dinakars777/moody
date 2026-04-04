@@ -1,0 +1,168 @@
+::1 - - [03/Apr/2026 13:33:57] "GET / HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:33:57] "GET /script.js HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:33:57] "GET /style.css HTTP/1.1" 304 -
+::1 - - [03/Apr/2026 13:34:07] code 404, message File not found
+::1 - - [03/Apr/2026 13:34:07] "GET /audio/en_default/slap/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:34:24] code 404, message File not found
+::1 - - [03/Apr/2026 13:34:24] "GET /audio/en_spicy/charger_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:34:31] code 404, message File not found
+::1 - - [03/Apr/2026 13:34:31] "GET /audio/en_spicy/usb_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:34:46] code 404, message File not found
+::1 - - [03/Apr/2026 13:34:46] "GET /audio/en_spicy/charger_out/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:34:51] code 404, message File not found
+::1 - - [03/Apr/2026 13:34:51] "GET /audio/en_spicy/lid_close/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:19] "GET / HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:39:19] "GET /style.css HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:39:19] "GET /script.js HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:39:20] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:20] "GET /favicon.ico HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:20] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:20] "GET /apple-touch-icon-precomposed.png HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:20] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:20] "GET /apple-touch-icon.png HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:20] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:20] "GET /favicon.ico HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:24] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:24] "GET /audio/en_spicy/usb_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:27] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:27] "GET /audio/en_spicy/usb_out/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:30] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:30] "GET /audio/en_spicy/charger_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:32] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:32] "GET /audio/en_spicy/usb_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:33] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:33] "GET /audio/en_spicy/usb_out/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:33] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:33] "GET /audio/en_spicy/charger_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:34] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:34] "GET /audio/en_spicy/charger_out/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:34] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:34] "GET /audio/en_spicy/lid_close/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:34] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:34] "GET /audio/en_spicy/slap/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:38] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:38] "GET /audio/ja_spicy/usb_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:39] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:39] "GET /audio/en_default/charger_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:40] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:40] "GET /audio/en_default/slap/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:40] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:40] "GET /audio/en_default/usb_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:40] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:40] "GET /audio/en_default/usb_out/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:39:41] code 404, message File not found
+::1 - - [03/Apr/2026 13:39:41] "GET /audio/en_default/charger_out/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:40:16] code 404, message File not found
+::1 - - [03/Apr/2026 13:40:16] "GET /audio/en_spicy/usb_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:40:18] code 404, message File not found
+::1 - - [03/Apr/2026 13:40:18] "GET /audio/ja_spicy/usb_out/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:40:20] code 404, message File not found
+::1 - - [03/Apr/2026 13:40:20] "GET /audio/ja_spicy/slap/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:40:20] code 404, message File not found
+::1 - - [03/Apr/2026 13:40:20] "GET /audio/ja_spicy/lid_close/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:57:03] "GET / HTTP/1.1" 304 -
+::1 - - [03/Apr/2026 13:57:03] "GET /script.js HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:03] "GET /style.css HTTP/1.1" 304 -
+::1 - - [03/Apr/2026 13:57:05] code 404, message File not found
+::1 - - [03/Apr/2026 13:57:05] "GET /audio/en_default/audio/charger_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:57:07] code 404, message File not found
+::1 - - [03/Apr/2026 13:57:07] "GET /audio/en_default/audio/usb_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:57:07] "GET /audio/en_default/audio/slap/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:07] code 404, message File not found
+::1 - - [03/Apr/2026 13:57:07] "GET /favicon.ico HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:57:09] code 404, message File not found
+::1 - - [03/Apr/2026 13:57:09] "GET /audio/en_default/audio/lid_close/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:57:10] code 404, message File not found
+::1 - - [03/Apr/2026 13:57:10] "GET /audio/en_default/audio/charger_out/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:57:10] code 404, message File not found
+::1 - - [03/Apr/2026 13:57:10] "GET /audio/en_default/audio/usb_out/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:57:19] "GET /audio/en_spicy/audio/usb_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:20] "GET /audio/en_spicy/audio/charger_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:21] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:22] "GET /audio/en_spicy/audio/lid_close/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:22] "GET /audio/en_spicy/audio/charger_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:23] "GET /audio/en_spicy/audio/usb_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:30] "GET /audio/ja_spicy/audio/usb_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:30] "GET /audio/ja_spicy/audio/usb_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:31] "GET /audio/ja_spicy/audio/charger_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:32] "GET /audio/ja_spicy/audio/charger_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:32] "GET /audio/ja_spicy/audio/slap/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:33] "GET /audio/ja_spicy/audio/lid_close/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:35] "GET /audio/en_gordon/usb_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:36] "GET /audio/en_gordon/usb_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:38] "GET /audio/en_gordon/charger_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:38] "GET /audio/en_gordon/charger_out/0.mp3 HTTP/1.1" 304 -
+::1 - - [03/Apr/2026 13:57:39] "GET /audio/en_gordon/slap/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 13:57:40] "GET /audio/en_gordon/lid_close/0.mp3 HTTP/1.1" 304 -
+::1 - - [03/Apr/2026 13:57:59] code 404, message File not found
+::1 - - [03/Apr/2026 13:57:59] "GET /audio/en_default/audio/usb_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:58:00] code 404, message File not found
+::1 - - [03/Apr/2026 13:58:00] "GET /audio/en_default/audio/usb_out/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:58:02] code 404, message File not found
+::1 - - [03/Apr/2026 13:58:02] "GET /audio/en_default/audio/charger_in/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:58:02] code 404, message File not found
+::1 - - [03/Apr/2026 13:58:02] "GET /audio/en_default/audio/charger_out/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 13:58:04] code 404, message File not found
+::1 - - [03/Apr/2026 13:58:04] "GET /audio/en_default/audio/lid_close/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 18:55:44] code 404, message File not found
+::1 - - [03/Apr/2026 18:55:44] "GET /audio/en_spicy/slap/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 18:55:47] code 404, message File not found
+::1 - - [03/Apr/2026 18:55:47] "GET /audio/en_spicy/slap/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 18:55:48] code 404, message File not found
+::1 - - [03/Apr/2026 18:55:48] "GET /audio/en_spicy/slap/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 18:55:48] code 404, message File not found
+::1 - - [03/Apr/2026 18:55:48] "GET /audio/en_spicy/slap/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 18:55:48] code 404, message File not found
+::1 - - [03/Apr/2026 18:55:48] "GET /audio/en_spicy/slap/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 18:55:48] code 404, message File not found
+::1 - - [03/Apr/2026 18:55:48] "GET /audio/en_spicy/slap/0.mp3 HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 18:55:50] "GET / HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:55:50] "GET /script.js HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:55:50] "GET /style.css HTTP/1.1" 304 -
+::1 - - [03/Apr/2026 18:55:52] "GET /audio/en_default/audio/slap/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:55:52] code 404, message File not found
+::1 - - [03/Apr/2026 18:55:52] "GET /favicon.ico HTTP/1.1" 404 -
+::1 - - [03/Apr/2026 18:55:55] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:55:56] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:55:57] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:55:58] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:55:58] "GET /audio/en_spicy/audio/lid_close/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:00] "GET /audio/en_spicy/audio/charger_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:02] "GET /audio/en_spicy/audio/charger_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:04] "GET /audio/en_spicy/audio/usb_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:06] "GET /audio/en_spicy/audio/usb_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:08] "GET /audio/en_spicy/audio/charger_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:13] "GET /audio/en_spicy/audio/usb_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:16] "GET /audio/ja_spicy/audio/slap/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:18] "GET /audio/ja_spicy/audio/usb_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:20] "GET /audio/ja_spicy/audio/usb_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:21] "GET /audio/ja_spicy/audio/charger_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:22] "GET /audio/ja_spicy/audio/slap/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:22] "GET /audio/ja_spicy/audio/lid_close/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:22] "GET /audio/ja_spicy/audio/charger_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:26] "GET /audio/en_default/audio/usb_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:29] "GET /audio/en_default/audio/usb_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:30] "GET /audio/en_default/audio/charger_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:33] "GET /audio/en_default/audio/slap/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:38] "GET /audio/en_spicy/audio/usb_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:40] "GET /audio/en_spicy/audio/usb_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:42] "GET /audio/en_spicy/audio/charger_in/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:45] "GET /audio/en_spicy/audio/charger_out/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:46] "GET /audio/en_spicy/audio/lid_close/0.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:48] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:49] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:50] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:50] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:50] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:50] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:51] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:51] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:51] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:51] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:51] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:52] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:52] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:52] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:52] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:56:52] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
+::1 - - [03/Apr/2026 18:58:02] "GET /audio/en_spicy/audio/slap/00.mp3 HTTP/1.1" 200 -
