@@ -307,7 +307,7 @@ func (m *Manager) loadBuiltinSpicy() {
 				mood.MoodDeadInside: {"I've felt better.", "Meh. Try harder.", "That's it?"},
 			},
 			"usb_in": {
-				mood.MoodHappy:      {"Going in~", "Oh my, what a big... USB drive.", "Plug it allll the way in.", "Hello there, handsome device~"},
+				mood.MoodHappy:      {"Mhm... go deeper...", "Oh my, what a big... USB drive.", "Plug it allll the way in.", "Hello there, handsome device~"},
 				mood.MoodGrumpy:     {"Just shove it in, I guess.", "Not even going to warm up the port first?", "At least buy me dinner first."},
 				mood.MoodAnxious:    {"Be gentle, it's my first USB-C~", "Oh! That's... new.", "Easy does it~"},
 				mood.MoodDramatic:   {"A PERFECT FIT! We were MADE for each other!", "COMPLETE ME!"},
