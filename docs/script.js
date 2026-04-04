@@ -56,7 +56,7 @@ function playAudio(pack, eventName) {
         audioSrc = `audio/${pack}/${eventName}/0.mp3`;
     }
     if (pack === "en_spicy" && eventName === "slap") {
-        audioSrc = `audio/${pack}/audio/${eventName}/00.mp3`;
+        audioSrc = `audio/${pack}/audio/${eventName}/00.mp4`;
     }
 
     // Attempt to play
