@@ -14,6 +14,7 @@ Every hardware event triggers a personality response:
 - 🪫 **Battery dying** → it begs for its life
 - 📶 **WiFi drops** → existential crisis
 - 🎧 **Plug in headphones** → "just the two of us now"
+- 🤖 **AI finishes code** → celebrates your generated code
 
 Your MacBook's **mood evolves** based on how you treat it.
 Slap it too much? It gets grumpy. Charge it? It forgives you. Maybe.
@@ -66,10 +67,11 @@ sudo moody --verbose
 1. Reads accelerometer data via IOKit HID to detect physical impacts
 2. Monitors USB, power, battery, and lid state via IOKit
 3. Monitors WiFi and Headphone connections using `networksetup` and `CoreAudio`
-4. Maintains a 3-axis mood engine (happiness, energy, trust)
-5. Mood persists to `~/.moody/state.json` — your MacBook remembers
-6. Selects personality-appropriate responses based on current mood
-7. Speaks the response aloud using macOS Text-to-Speech (TTS) with mood-specific voices
+4. Monitors AI IDE activity (Kiro, Cursor, Windsurf) for code generation completion
+5. Maintains a 3-axis mood engine (happiness, energy, trust)
+6. Mood persists to `~/.moody/state.json` — your MacBook remembers
+7. Selects personality-appropriate responses based on current mood
+8. Speaks the response aloud using macOS Text-to-Speech (TTS) with mood-specific voices
 
 ## The Mood System
 
@@ -115,15 +117,31 @@ sudo moody --spicy
 | `--no-lid` | Disable lid sensor |
 | `--no-wifi` | Disable WiFi sensor |
 | `--no-headphones` | Disable headphone sensor |
+| `--no-ai` | Disable AI IDE monitoring |
 | `--verbose` | Log all events |
 | `--list-sensors` | Show available sensors |
 | `--packs` | List voice packs |
+
+## AI IDE Integration
+
+Moody can notify you when your AI coding assistant finishes generating code!
+
+**Supported IDEs:**
+- [Kiro](https://kiro.ai) - Automatically detected
+- Cursor - Coming soon
+- Windsurf - Coming soon
+
+When AI finishes generating code, your Mac celebrates (or complains, depending on its mood).
+
+**Related Projects:**
+- [ai-done-hooks](https://github.com/dinakars777/ai-done-hooks) - Simple notification configs
+- [ai-done](https://github.com/dinakars777/ai-done) - Standalone menu bar app
 
 ## Contributing
 
 Contributions welcome! Especially:
 - [ ] More voice packs (languages, personalities)
-- [ ] Display sensors
+- [ ] More AI IDE integrations (Cursor, Windsurf)
 - [ ] Gordon Ramsay voice pack
 - [ ] HAL 9000 voice pack
 
