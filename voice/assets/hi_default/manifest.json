@@ -1,0 +1,9 @@
+{
+  "name": "Hindi Default",
+  "language": "hi",
+  "personality": "default",
+  "version": "1.0.0",
+  "author": "moody-team",
+  "nsfw": false,
+  "description": "आपका MacBook हिंदी में बोलता है"
+}
