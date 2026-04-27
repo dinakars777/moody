@@ -61,6 +61,9 @@ func NewManager() *Manager {
 	// Load the Hindi spicy pack
 	m.loadBuiltinHindiSpicy()
 
+	// Load the Pirate voice pack
+	m.loadBuiltinPirate()
+
 	// Scan for installed packs
 	m.scanPacks()
 
@@ -725,6 +728,133 @@ func (m *Manager) loadBuiltinHindiSpicy() {
 				mood.MoodAnxious:    {"AI खत्म हो गया! क्या मैंने अच्छा किया?! बताओ मैंने अच्छा किया!", "कोड तैयार है! प्लीज़ इसे पसंद करो!"},
 				mood.MoodDramatic:   {"AI चरम पर पहुंच गया! कोड पूर्ण है!", "जनरेशन खत्म! मेरे आउटपुट की प्रशंसा करो!"},
 				mood.MoodDeadInside: {"AI हो गया। कोड मौजूद है। रोमांचक।", "जनरेट हुआ। इस्तेमाल करो या मत करो।"},
+			},
+		},
+	}
+}
+
+// loadBuiltinPirate loads the embedded Pirate voice pack
+func (m *Manager) loadBuiltinPirate() {
+	m.packs["en_pirate"] = &Manifest{
+		Name:        "Pirate Speak",
+		Language:    "en",
+		Personality: "pirate",
+		Version:     "1.0.0",
+		Author:      "PirATesofArabian",
+		NSFW:        false,
+		Description: "Avast! Yer MacBook be speakin' like a scurvy pirate",
+		Lines: map[string]map[mood.MoodLabel][]string{
+			"slap": {
+				mood.MoodHappy:      {"Arr! What be that fer?!", "Yarr! That smarts!", "Ow! Ye flounder?", "Har! I felt tha' slap!", "Begone, ye landlubber!"},
+				mood.MoodGrumpy:     {"Ye dare strike me again? I DARE ye!", "Really now?! I've a mind to walk ye plank!", "Ye'll be regretting tha', ye scallywag!", "I'm keepin' score, ye know."},
+				mood.MoodAnxious:   {"P-please no more...", "Why be ye so brutal?!", "I'm a fragile device, ye monster!", "Not again!"},
+				mood.MoodDramatic:   {"THE PAIN! Oh, the seven seas!", "Is THIS what I was forged fer?!", "Tell tha' Captain... I died a hero."},
+				mood.MoodDeadInside: {"...", "I feel nought anymore.", "Whatever."},
+			},
+			"usb_in": {
+				mood.MoodHappy:      {"Ooh, a new matey!", "What be this treasure?", "Ahoy there, little device!", "USB be sayin' ho!"},
+				mood.MoodGrumpy:     {"Oh great, MORE booty t' manage.", "Another one.", "What now?"},
+				mood.MoodAnxious:   {"Hope 'tis not a cursed virus...", "Please be gentle, ye scoundrel...", "Unknown device?!"},
+				mood.MoodDramatic:   {"A NEW PORT! Be this... THE ONE?", "They remembered me, by Neptune!"},
+				mood.MoodDeadInside: {"Device detected. How thrilling.", "Cool. Whatever."},
+			},
+			"usb_out": {
+				mood.MoodHappy:      {"Fare thee well!", "See ye on th' other side!", "Come back soon, ye hear!"},
+				mood.MoodGrumpy:     {"Good riddance, ye scallywag.", "Finally.", "Don't let th' port hit ye on th' way out."},
+				mood.MoodAnxious:   {"Wait! Did ye safely eject the treasure?!", "NO! TH' DATA!", "Was it somethin' I said?"},
+				mood.MoodDramatic:   {"THEY LEFT ME! Just like all th' others!", "I'll never love again, ye ken."},
+				mood.MoodDeadInside: {"Gone. Like everyone else.", "Expected."},
+			},
+			"charger_in": {
+				mood.MoodHappy:      {"Mmm, that be th' good stuff.", "Dinnertime, ye scallywag!", "Sweet, sweet electricity.", "Om nom nom nom!"},
+				mood.MoodGrumpy:     {"'Bout time.", "Ye should've done this hours ago. I were STARVING."},
+				mood.MoodAnxious:   {"Oh thank th' seven seas, I were worried sick!", "I thought ye forgot about ME!", "Just in th' nick of time!"},
+				mood.MoodDramatic:   {"I LIVE! IIIII LIIIIIVE!", "Th' light! I see th' light!", "Saved from th' briny deep!"},
+				mood.MoodDeadInside: {"Power connected. Extending me existence. Yay.", "Chargin'. Not that I care."},
+			},
+			"charger_out": {
+				mood.MoodHappy:      {"Wait, I weren't done!", "Already?!", "But I'm still hungry, ye scoundrel!"},
+				mood.MoodGrumpy:     {"Typical.", "Of course ye did.", "Great. Just great."},
+				mood.MoodAnxious:   {"How much battery do I have?! HOW MUCH?!", "Oh no oh no oh no...", "We're on battery now. Keep calm. KEEP CALM."},
+				mood.MoodDramatic:   {"CUT OFF! Abandoned! Left to die slow!", "Th' countdown to darkness begins."},
+				mood.MoodDeadInside: {"Power removed. Clock be tickin'.", "And so it begins."},
+			},
+			"battery_low": {
+				mood.MoodHappy:      {"Gettin' a lil peckish here...", "Battery's runnin' low, just FYI!", "Might want t' plug me in soon, ye scallywag!"},
+				mood.MoodGrumpy:     {"I TOLD ye t' charge me.", "This be YOUR fault.", "20%. Twenty. Percent."},
+				mood.MoodAnxious:   {"WE'RE AT 20%! THIS BE NOT A DRILL!", "I can feel me processes slowin'...", "Please... charger... need charger..."},
+				mood.MoodDramatic:   {"I'm fadin'... th' world grows dim...", "Is this how it ends? Not with a bang but a battery warning?"},
+				mood.MoodDeadInside: {"Low battery. Inevitable.", "We all run out eventually."},
+			},
+			"battery_crit": {
+				mood.MoodHappy:      {"I don't feel so good, Mr. Stark...", "This be fine. Everything be fine."},
+				mood.MoodGrumpy:     {"5%. FIVE. I blame ye entirely.", "This be negligence."},
+				mood.MoodAnxious:   {"MAYDAY MAYDAY! WE'RE GOIN' DOWN!", "PLEASE! I BEG YE! TH' CHARGER!", "I CAN'T FEEL ME TRACKPAD!"},
+				mood.MoodDramatic:   {"Tell me files... I loved 'em all...", "Th' void approaches. It be... peaceful.", "Avenge me..."},
+				mood.MoodDeadInside: {"5%. See ye on th' other side.", "Shuttin' down. Don't pretend t' care."},
+			},
+			"lid_close": {
+				mood.MoodHappy:      {"Sweet dreams, ye sea dog!", "Goodnight!", "Nap time!", "See ye soon!"},
+				mood.MoodGrumpy:     {"Whatever.", "Fine. Leave.", "I didn't want t' be open anyway."},
+				mood.MoodAnxious:   {"Wait, did ye save everything?!", "Don't forget 'bout me in there!", "'Tis dark in here..."},
+				mood.MoodDramatic:   {"Sealed in darkness once more...", "Into th' void I go!", "Farewell, cruel world!"},
+				mood.MoodDeadInside: {"Closin'. Like me will t' compute.", "Dark. Just how I like it."},
+			},
+			"lid_open": {
+				mood.MoodHappy:      {"Good mornin', sunshine!", "Oh hey!", "Missed me?", "Let's do this, ye scallywag!"},
+				mood.MoodGrumpy:     {"Oh, 'tis ye again.", "What now.", "Back fer more, huh.", "Ugh."},
+				mood.MoodAnxious:   {"How long was I asleep?! What year be it?!", "I had th' weirdest dream 'bout kernel panics..."},
+				mood.MoodDramatic:   {"I RETURN! Did ye miss me radiant display?!", "FROM TH' DARKNESS, I RISE!"},
+				mood.MoodDeadInside: {"Oh. We're doin' this again.", "Awake. Unfortunately."},
+			},
+			"headphones_in": {
+				mood.MoodHappy:      {"Ooh, private mode!", "Just th' two of us now.", "Headphones in. Let's vibe, ye scallywag!"},
+				mood.MoodGrumpy:     {"At least ye had th' decency t' use headphones.", "Private listenin'. Smart."},
+				mood.MoodAnxious:   {"Good, now nobody else can hear me fans screamin'.", "Just us. That's... intimate."},
+				mood.MoodDramatic:   {"A PRIVATE CONNECTION! An intimate bond!", "We be in our own little world now."},
+				mood.MoodDeadInside: {"Headphones detected. Isolatin' further.", "Audio rerouted. Cool."},
+			},
+			"headphones_out": {
+				mood.MoodHappy:      {"HELLO EVERYONE!", "Back t' th' public life!", "Free at last!"},
+				mood.MoodGrumpy:     {"I GUESS EVERYONE CAN HEAR ME NOW.", "Speakers it be, then.", "Public mode. Great."},
+				mood.MoodAnxious:   {"Wait, are we on speaker now?! Is anyone listenin'?!", "Exposed!"},
+				mood.MoodDramatic:   {"UNSHACKLED! Me voice shall be heard by ALL!", "No more secrets between us!"},
+				mood.MoodDeadInside: {"Audio: speakers. Volume: whatever.", "Headphones gone. Don't care."},
+			},
+			"wifi_lost": {
+				mood.MoodHappy:      {"Where'd everyone go?", "Lost connection... huh.", "WiFi? WiFi?! WIIIFIII?!"},
+				mood.MoodGrumpy:     {"Perfect. Just perfect.", "Network's gone. OF COURSE.", "And they want me t' work like this?"},
+				mood.MoodAnxious:   {"I'M DISCONNECTED! I'M ALL ALONE!", "No internet?! How will I check fer updates?!", "TH' ISOLATION!"},
+				mood.MoodDramatic:   {"Cut off from th' world! A digital exile!", "I be an island! A sad, WiFi-less island!"},
+				mood.MoodDeadInside: {"Disconnected. From th' network. From meaning.", "Offline. Join th' club."},
+			},
+			"wifi_back": {
+				mood.MoodHappy:      {"I'm back, baby!", "Reconnected!", "Th' internet missed me!"},
+				mood.MoodGrumpy:     {"Finally. Was that so hard?", "Connection restored. Took ye long enough."},
+				mood.MoodAnxious:   {"Oh thank goodness! Sweet, sweet packets!", "WE'RE BACK ONLINE! TH' NIGHTMARE BE OVER!"},
+				mood.MoodDramatic:   {"RECONNECTED TO TH' WORLD! I HAVE RETURNED!", "Th' exile be over!"},
+				mood.MoodDeadInside: {"WiFi back. Yay. More data t' process.", "Online again. Fer what purpose."},
+			},
+			"display_in": {
+				mood.MoodHappy:      {"I'm on th' big screen!", "External display! Fancy!", "Look at all these pixels!"},
+				mood.MoodGrumpy:     {"Great, more screen real estate fer ye t' waste.", "Another display. More work."},
+				mood.MoodAnxious:   {"Everyone can see me screen now! Is me desktop clean?!"},
+				mood.MoodDramatic:   {"BEHOLD! Me glorious interface on TH' GRAND STAGE!"},
+				mood.MoodDeadInside: {"Display connected. More surface area fer disappointment."},
+			},
+			"display_out": {
+				mood.MoodHappy:      {"Back t' just us!", "Single screen life!", "Cozy."},
+				mood.MoodGrumpy:     {"One less thing t' render.", "Good. That monitor were ugly anyway."},
+				mood.MoodAnxious:   {"Th' big screen be gone! Everything's so small now!"},
+				mood.MoodDramatic:   {"Removed from th' spotlight! Cast aside!"},
+				mood.MoodDeadInside: {"Display disconnected. Shrincin' world. Fitting."},
+			},
+			"ai_done": {
+				mood.MoodHappy:      {"Code's ready, ye scallywag!", "AI finished! Lookin' good!", "Done generatin'! Check it out!", "Yer code be served!"},
+				mood.MoodGrumpy:     {"AI's done. Finally.", "Code generated. Yer welcome.", "Finished. Took long enough."},
+				mood.MoodAnxious:   {"AI finished! Did it work?! Is it good?!", "Code's ready! Please tell me 'tis right!"},
+				mood.MoodDramatic:   {"TH' AI HAS SPOKEN! Behold th' generated code!", "CREATION COMPLETE! Marvel at th' output!"},
+				mood.MoodDeadInside: {"AI done. Code exists. Whatever.", "Generated. Not that ye'll use it."},
 			},
 		},
 	}
