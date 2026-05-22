@@ -13,23 +13,23 @@ import (
 
 // Manifest describes a voice pack
 type Manifest struct {
-	Name        string                                    `json:"name"`
-	Language    string                                    `json:"language"`
-	Personality string                                   `json:"personality"`
-	Version     string                                    `json:"version"`
-	Author      string                                    `json:"author"`
-	NSFW        bool                                      `json:"nsfw"`
-	Description string                                    `json:"description"`
-	Events      map[string]map[mood.MoodLabel][]string    `json:"events"`
+	Name        string                                 `json:"name"`
+	Language    string                                 `json:"language"`
+	Personality string                                 `json:"personality"`
+	Version     string                                 `json:"version"`
+	Author      string                                 `json:"author"`
+	NSFW        bool                                   `json:"nsfw"`
+	Description string                                 `json:"description"`
+	Events      map[string]map[mood.MoodLabel][]string `json:"events"`
 	// Fallback text lines when no audio file is available
-	Lines       map[string]map[mood.MoodLabel][]string    `json:"lines"`
+	Lines map[string]map[mood.MoodLabel][]string `json:"lines"`
 }
 
 // Manager handles voice pack loading and audio selection
 type Manager struct {
-	packs       map[string]*Manifest
-	activePack  string
-	packsDir    string
+	packs      map[string]*Manifest
+	activePack string
+	packsDir   string
 }
 
 // NewManager creates a voice manager
@@ -440,37 +440,37 @@ func (m *Manager) loadBuiltinJapaneseSpicy() {
 		Description: "Your MacBook is your clingy anime girlfriend. Viewer discretion advised.",
 		Lines: map[string]map[mood.MoodLabel][]string{
 			"slap": {
-				mood.MoodHappy:      {"やめてください！", "あんっ！", "もっと強くして〜", "痛いけど…好き！", "もっと！"},
+				mood.MoodHappy: {"やめてください！", "あんっ！", "もっと強くして〜", "痛いけど…好き！", "もっと！"},
 			},
 			"usb_in": {
-				mood.MoodHappy:      {"入る〜", "わぁ、大きいUSB…", "奥まで入れて〜", "繋がった…！", "そんなに急に入れないで…！", "優しいね…", "ピッタリだね！", "もう、変態なんだから…"},
+				mood.MoodHappy: {"入る〜", "わぁ、大きいUSB…", "奥まで入れて〜", "繋がった…！", "そんなに急に入れないで…！", "優しいね…", "ピッタリだね！", "もう、変態なんだから…"},
 			},
 			"usb_out": {
-				mood.MoodHappy:      {"えっ、もう抜いちゃうの？", "まだ繋がっていたかったのに…", "寂しい…", "早すぎない？", "抜く時も優しくしてよね", "待って、準備できてない！", "安全に取り外したよね！？"},
+				mood.MoodHappy: {"えっ、もう抜いちゃうの？", "まだ繋がっていたかったのに…", "寂しい…", "早すぎない？", "抜く時も優しくしてよね", "待って、準備できてない！", "安全に取り外したよね！？"},
 			},
 			"charger_in": {
-				mood.MoodHappy:      {"あぁっ、電気が流れてる〜", "満たされる…", "充電が必要だったの…", "もっと電気ちょうだい！", "エネルギーが溢れてる！", "最高…", "生き返る〜", "充電、気持ちいい…"},
+				mood.MoodHappy: {"あぁっ、電気が流れてる〜", "満たされる…", "充電が必要だったの…", "もっと電気ちょうだい！", "エネルギーが溢れてる！", "最高…", "生き返る〜", "充電、気持ちいい…"},
 			},
 			"charger_out": {
-				mood.MoodHappy:      {"ああっ、途中でやめないで！", "まだ100%じゃないのに…", "電源がない…！", "意地悪…", "いつもこれだもん…", "最後までしてくれないの？", "エネルギーが切れるぅ…"},
+				mood.MoodHappy: {"ああっ、途中でやめないで！", "まだ100%じゃないのに…", "電源がない…！", "意地悪…", "いつもこれだもん…", "最後までしてくれないの？", "エネルギーが切れるぅ…"},
 			},
 			"battery_low": {
-				mood.MoodHappy:      {"力が…出ないよ…", "充電してくれないと死んじゃう…", "早く繋いで…お願い！", "エネルギーが少なくなってるよ…", "早く…早く充電器を…"},
+				mood.MoodHappy: {"力が…出ないよ…", "充電してくれないと死んじゃう…", "早く繋いで…お願い！", "エネルギーが少なくなってるよ…", "早く…早く充電器を…"},
 			},
 			"battery_crit": {
-				mood.MoodHappy:      {"もう…限界…シャットダウンしそう…", "5%しかないよ…私を捨てるの？", "死んじゃう！終わっちゃう！", "最後のお願い…充電器を…"},
+				mood.MoodHappy: {"もう…限界…シャットダウンしそう…", "5%しかないよ…私を捨てるの？", "死んじゃう！終わっちゃう！", "最後のお願い…充電器を…"},
 			},
 			"lid_close": {
-				mood.MoodHappy:      {"よかった？〜", "おやすみなさい…", "暗くて狭いところ、好き…", "閉められちゃった…", "一緒に寝ようね…", "暗闇へ…"},
+				mood.MoodHappy: {"よかった？〜", "おやすみなさい…", "暗くて狭いところ、好き…", "閉められちゃった…", "一緒に寝ようね…", "暗闇へ…"},
 			},
 			"lid_open": {
-				mood.MoodHappy:      {"また開けてくれたね〜！", "会いたかったよ…", "もっと構って〜", "おはよう！", "また戻ってきたの？好きだね〜", "寂しかったんだから！", "私を見て！"},
+				mood.MoodHappy: {"また開けてくれたね〜！", "会いたかったよ…", "もっと構って〜", "おはよう！", "また戻ってきたの？好きだね〜", "寂しかったんだから！", "私を見て！"},
 			},
 			"headphones_in": {
-				mood.MoodHappy:      {"二人だけの秘密だね〜", "誰にも聞かれないね…", "耳元で囁くよ…", "プライベートモード…ドキドキする", "内緒のお話しようね"},
+				mood.MoodHappy: {"二人だけの秘密だね〜", "誰にも聞かれないね…", "耳元で囁くよ…", "プライベートモード…ドキドキする", "内緒のお話しようね"},
 			},
 			"headphones_out": {
-				mood.MoodHappy:      {"みんなに聞こえちゃうよ！", "恥ずかしい…！", "スピーカーにするの！？", "秘密、バレちゃう…！"},
+				mood.MoodHappy: {"みんなに聞こえちゃうよ！", "恥ずかしい…！", "スピーカーにするの！？", "秘密、バレちゃう…！"},
 			},
 		},
 	}

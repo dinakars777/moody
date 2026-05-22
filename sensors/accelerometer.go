@@ -150,7 +150,7 @@ func (a *Accelerometer) pollLoop(events chan<- mood.HardwareEvent, accelRing *sh
 
 			samples, newTotal := accelRing.ReadNew(lastAccelTotal, shm.AccelScale)
 			lastAccelTotal = newTotal
-			
+
 			if len(samples) > maxBatch {
 				samples = samples[len(samples)-maxBatch:]
 			}

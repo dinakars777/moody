@@ -17,29 +17,29 @@ typedef struct {
 
 static PowerState get_power_state(void) {
     PowerState state = {0, -1, 0};
-    
+
     CFTypeRef info = IOPSCopyPowerSourcesInfo();
     if (!info) return state;
-    
+
     CFArrayRef sources = IOPSCopyPowerSourcesList(info);
     if (!sources) {
         CFRelease(info);
         return state;
     }
-    
+
     if (CFArrayGetCount(sources) > 0) {
         CFDictionaryRef ps = IOPSGetPowerSourceDescription(info, CFArrayGetValueAtIndex(sources, 0));
         if (ps) {
             // Battery percentage
             CFNumberRef cap = CFDictionaryGetValue(ps, CFSTR(kIOPSCurrentCapacityKey));
             if (cap) CFNumberGetValue(cap, kCFNumberIntType, &state.battery_pct);
-            
+
             // Power source type
             CFStringRef source = CFDictionaryGetValue(ps, CFSTR(kIOPSPowerSourceStateKey));
             if (source) {
                 state.ac_connected = CFStringCompare(source, CFSTR(kIOPSACPowerValue), 0) == kCFCompareEqualTo;
             }
-            
+
             // Charging state
             CFBooleanRef charging = CFDictionaryGetValue(ps, CFSTR(kIOPSIsChargingKey));
             if (charging) {
@@ -47,7 +47,7 @@ static PowerState get_power_state(void) {
             }
         }
     }
-    
+
     CFRelease(sources);
     CFRelease(info);
     return state;
@@ -103,7 +103,7 @@ func (p *Power) Stop() {
 func (p *Power) pollLoop(events chan<- mood.HardwareEvent) {
 	var prevAC int = -1 // -1 = unknown
 	var sentLow, sentCrit bool
-	
+
 	ticker := time.NewTicker(5 * time.Second)
 	defer ticker.Stop()
 

@@ -12,9 +12,9 @@ import (
 type Dashboard struct {
 	engine    *mood.Engine
 	startTime time.Time
-	lastLine   string
-	packName   string
-	verbose    bool
+	lastLine  string
+	packName  string
+	verbose   bool
 }
 
 // NewDashboard creates a new TUI dashboard

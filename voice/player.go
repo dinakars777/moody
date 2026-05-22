@@ -8,7 +8,7 @@ import (
 	"github.com/dinakars777/moody/mood"
 )
 
-// macOS voice mapping per mood — default to female (Samantha) for all moods 
+// macOS voice mapping per mood — default to female (Samantha) for all moods
 // to maintain a consistent female personality across the app
 var moodVoices = map[mood.MoodLabel]string{
 	mood.MoodHappy:      "Samantha",
