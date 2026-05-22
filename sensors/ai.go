@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"sync"
 	"time"
 
 	"github.com/dinakars777/moody/mood"
@@ -16,6 +17,7 @@ type AI struct {
 	watcher *fsnotify.Watcher
 	events  chan<- mood.HardwareEvent
 	done    chan struct{}
+	stop    sync.Once
 	verbose bool
 }
 
@@ -73,10 +75,12 @@ func (a *AI) Start(events chan<- mood.HardwareEvent) error {
 }
 
 func (a *AI) Stop() {
-	close(a.done)
-	if a.watcher != nil {
-		a.watcher.Close()
-	}
+	a.stop.Do(func() {
+		close(a.done)
+		if a.watcher != nil {
+			a.watcher.Close()
+		}
+	})
 }
 
 func (a *AI) watch() {

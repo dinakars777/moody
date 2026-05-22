@@ -3,6 +3,7 @@ package sensors
 import (
 	"fmt"
 	"math"
+	"runtime"
 	"sync"
 	"time"
 
@@ -49,10 +50,7 @@ func NewAccelerometer(minAmplitude float64, cooldownMs int, fast bool) *Accelero
 func (a *Accelerometer) Name() string { return "Accelerometer (Apple Silicon)" }
 
 func (a *Accelerometer) Available() bool {
-	// Let's assume it's available if we can compile this code,
-	// though it really requires sudo + Apple Silicon.
-	// Real detection happens in Start().
-	return true
+	return runtime.GOOS == "darwin" && runtime.GOARCH == "arm64"
 }
 
 func (a *Accelerometer) Start(events chan<- mood.HardwareEvent) error {
@@ -73,14 +71,12 @@ func (a *Accelerometer) Start(events chan<- mood.HardwareEvent) error {
 		return fmt.Errorf("creating accel shm: %w", err)
 	}
 
-	// Wait channels for the background sensor worker
-	sensorReady := make(chan struct{})
+	// Wait briefly for immediate launch failures from the background sensor worker.
 	sensorErr := make(chan error, 1)
 
 	// Fire up the sensor.Run() function which needs CFRunLoop.
 	// It blocks forever, so we run it in a goroutine.
 	go func() {
-		close(sensorReady)
 		err := sensor.Run(sensor.Config{
 			AccelRing: accelRing,
 		})
@@ -89,7 +85,6 @@ func (a *Accelerometer) Start(events chan<- mood.HardwareEvent) error {
 		}
 	}()
 
-	// Wait for sensor to be ready or fail immediately
 	select {
 	case err := <-sensorErr:
 		a.mu.Lock()
@@ -98,9 +93,7 @@ func (a *Accelerometer) Start(events chan<- mood.HardwareEvent) error {
 		accelRing.Close()
 		accelRing.Unlink()
 		return fmt.Errorf("sensor launch failed: %w", err)
-	case <-sensorReady:
-		// Give it a tiny bit of time to start up
-		time.Sleep(100 * time.Millisecond)
+	case <-time.After(500 * time.Millisecond):
 	}
 
 	go a.pollLoop(events, accelRing)

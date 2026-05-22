@@ -118,12 +118,14 @@ var impacts = map[EventType]moodImpact{
 
 // Engine manages mood state and processes events
 type Engine struct {
-	mu          sync.RWMutex
-	current     Mood
-	eventCount  int
-	lastEvent   *HardwareEvent
-	stateFile   string
-	decayTicker *time.Ticker
+	mu           sync.RWMutex
+	current      Mood
+	eventCount   int
+	lastEvent    *HardwareEvent
+	stateFile    string
+	decayTicker  *time.Ticker
+	stopCh       chan struct{}
+	shutdownOnce sync.Once
 }
 
 // NewEngine creates a mood engine and loads persisted state
@@ -135,6 +137,7 @@ func NewEngine() *Engine {
 	e := &Engine{
 		current:   Mood{Happiness: 0.5, Energy: 0.5, Trust: 0.5}, // Start slightly positive
 		stateFile: filepath.Join(stateDir, "state.json"),
+		stopCh:    make(chan struct{}),
 	}
 
 	// Try to load persisted state
@@ -199,33 +202,45 @@ func (e *Engine) LastEvent() *HardwareEvent {
 
 // decayLoop slowly drifts mood back toward neutral
 func (e *Engine) decayLoop() {
-	for range e.decayTicker.C {
-		e.mu.Lock()
-		decay := 0.005 // Per 30 seconds
-		if e.current.Happiness > 0 {
-			e.current.Happiness -= decay
-		} else if e.current.Happiness < 0 {
-			e.current.Happiness += decay
+	for {
+		select {
+		case <-e.decayTicker.C:
+			e.mu.Lock()
+			decay := 0.005 // Per 30 seconds
+			if e.current.Happiness > 0 {
+				e.current.Happiness -= decay
+			} else if e.current.Happiness < 0 {
+				e.current.Happiness += decay
+			}
+			if e.current.Energy > 0 {
+				e.current.Energy -= decay
+			} else if e.current.Energy < 0 {
+				e.current.Energy += decay
+			}
+			if e.current.Trust > 0 {
+				e.current.Trust -= decay
+			} else if e.current.Trust < 0 {
+				e.current.Trust += decay
+			}
+			e.mu.Unlock()
+		case <-e.stopCh:
+			return
 		}
-		if e.current.Energy > 0 {
-			e.current.Energy -= decay
-		} else if e.current.Energy < 0 {
-			e.current.Energy += decay
-		}
-		if e.current.Trust > 0 {
-			e.current.Trust -= decay
-		} else if e.current.Trust < 0 {
-			e.current.Trust += decay
-		}
-		e.mu.Unlock()
 	}
 }
 
 // persistLoop saves mood state to disk every 30 seconds
 func (e *Engine) persistLoop() {
 	ticker := time.NewTicker(30 * time.Second)
-	for range ticker.C {
-		e.saveState()
+	defer ticker.Stop()
+
+	for {
+		select {
+		case <-ticker.C:
+			e.saveState()
+		case <-e.stopCh:
+			return
+		}
 	}
 }
 
@@ -271,6 +286,9 @@ func (e *Engine) loadState() {
 
 // Shutdown saves state and cleans up
 func (e *Engine) Shutdown() {
-	e.decayTicker.Stop()
-	e.saveState()
+	e.shutdownOnce.Do(func() {
+		close(e.stopCh)
+		e.decayTicker.Stop()
+		e.saveState()
+	})
 }
