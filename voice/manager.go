@@ -1,7 +1,6 @@
 package voice
 
 import (
-	"encoding/json"
 	"fmt"
 	"math/rand"
 	"os"
@@ -13,14 +12,20 @@ import (
 
 // Manifest describes a voice pack
 type Manifest struct {
-	Name        string                                 `json:"name"`
-	Language    string                                 `json:"language"`
-	Personality string                                 `json:"personality"`
-	Version     string                                 `json:"version"`
-	Author      string                                 `json:"author"`
-	NSFW        bool                                   `json:"nsfw"`
-	Description string                                 `json:"description"`
-	Events      map[string]map[mood.MoodLabel][]string `json:"events"`
+	Name            string                                 `json:"name"`
+	Language        string                                 `json:"language"`
+	Personality     string                                 `json:"personality"`
+	Version         string                                 `json:"version"`
+	Author          string                                 `json:"author"`
+	NSFW            bool                                   `json:"nsfw"`
+	Description     string                                 `json:"description"`
+	MinMoodyVersion string                                 `json:"minMoodyVersion,omitempty"`
+	License         string                                 `json:"license,omitempty"`
+	Homepage        string                                 `json:"homepage,omitempty"`
+	SupportedEvents []string                               `json:"supportedEvents,omitempty"`
+	AudioFormats    []string                               `json:"audioFormats,omitempty"`
+	Checksums       map[string]string                      `json:"checksums,omitempty"`
+	Events          map[string]map[mood.MoodLabel][]string `json:"events"`
 	// Fallback text lines when no audio file is available
 	Lines map[string]map[mood.MoodLabel][]string `json:"lines"`
 }
@@ -163,17 +168,11 @@ func (m *Manager) scanPacks() {
 		if !entry.IsDir() {
 			continue
 		}
-		manifestPath := filepath.Join(m.packsDir, entry.Name(), "manifest.json")
-		data, err := os.ReadFile(manifestPath)
+		manifest, packName, err := ValidatePack(filepath.Join(m.packsDir, entry.Name()))
 		if err != nil {
 			continue
 		}
-		var manifest Manifest
-		if err := json.Unmarshal(data, &manifest); err != nil {
-			continue
-		}
-		packName := manifest.Language + "_" + manifest.Personality
-		m.packs[packName] = &manifest
+		m.packs[packName] = manifest
 	}
 }
 

@@ -27,6 +27,9 @@ func main() {
 		case "doctor":
 			runDoctor(os.Args[2:])
 			return
+		case "pack":
+			runPackCommand(os.Args[2:])
+			return
 		case "install":
 			if len(os.Args) < 3 {
 				fmt.Println("Usage: moody install <git-url>")
