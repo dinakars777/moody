@@ -157,16 +157,6 @@ Examples:
 		return
 	}
 
-	// Print startup banner
-	if packInfo != nil && packInfo.NSFW {
-		fmt.Println("🫠 moody v" + version + " — " + packInfo.Description + " 🔞")
-	} else {
-		fmt.Println("🫠 moody v" + version + " — Your MacBook has feelings.")
-	}
-	fmt.Printf("   Pack: %s | Sensors: %d\n", activePack, len(allSensors))
-	fmt.Println("   Press Ctrl+C to quit")
-	fmt.Println()
-
 	// Initialize mood engine
 	engine := mood.NewEngine()
 	defer engine.Shutdown()
@@ -185,15 +175,18 @@ Examples:
 
 	// Start sensors
 	activeSensorCount := 0
+	skippedSensorCount := 0
 	for _, s := range allSensors {
 		status := s.Status()
 		if !status.Available {
+			skippedSensorCount++
 			if *verbose {
 				log.Printf("[sensor] %s: not available, skipping: %s", s.Name(), status.Reason)
 			}
 			continue
 		}
 		if err := s.Start(events); err != nil {
+			skippedSensorCount++
 			if *verbose {
 				log.Printf("[sensor] %s: failed to start: %v", s.Name(), err)
 			}
@@ -208,6 +201,8 @@ Examples:
 	if activeSensorCount == 0 {
 		log.Fatal("No sensors started. Run `moody doctor` for details.")
 	}
+
+	printStartupBanner(packInfo, activePack, activeSensorCount, len(allSensors), skippedSensorCount)
 
 	// Dashboard (optional)
 	var dash *tui.Dashboard
@@ -248,6 +243,24 @@ Examples:
 			}
 		}
 	}
+}
+
+func printStartupBanner(packInfo *voice.Manifest, activePack string, activeSensorCount, configuredSensorCount, skippedSensorCount int) {
+	if packInfo != nil && packInfo.NSFW {
+		fmt.Println("🫠 moody v" + version + " — " + packInfo.Description + " 🔞")
+	} else {
+		fmt.Println("🫠 moody v" + version + " — Your MacBook has feelings.")
+	}
+	fmt.Printf("   Pack: %s | Sensors: %d active", activePack, activeSensorCount)
+	if skippedSensorCount > 0 {
+		fmt.Printf(", %d skipped", skippedSensorCount)
+	}
+	fmt.Printf(" of %d configured\n", configuredSensorCount)
+	if skippedSensorCount > 0 {
+		fmt.Println("   Run `moody doctor` for sensor details.")
+	}
+	fmt.Println("   Press Ctrl+C to quit")
+	fmt.Println()
 }
 
 func processEvent(engine *mood.Engine, voiceMgr *voice.Manager, player *voice.Player, dash *tui.Dashboard, evt mood.HardwareEvent, mute, verbose bool) {
