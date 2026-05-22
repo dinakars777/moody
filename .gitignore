@@ -2,5 +2,6 @@ moody
 moody-*
 *.exe
 dist/
+.playwright-mcp/
 .DS_Store
 docs/server.log

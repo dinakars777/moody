@@ -30,13 +30,14 @@ const barEnergy = document.getElementById("bar-energy");
 const barTrust = document.getElementById("bar-trust");
 const logEventEl = document.getElementById("log-event");
 const logResponseEl = document.getElementById("log-response");
-const packBtns = document.querySelectorAll(".pack-btn");
+const packSelectorEl = document.getElementById("pack-selector");
 const eventBtns = document.querySelectorAll(".event-btn");
 
 let currentPack = "en_spicy";
 let currentMood = "happy";
 let currentAudio = null;
-const textOnlyPacks = new Set(["hi_default", "hi_spicy", "en_pirate"]);
+let demoConfig = null;
+let packsById = new Map();
 
 // State tracking relative to 0% to 100%
 let state = {
@@ -47,7 +48,8 @@ let state = {
 
 // Simple audio playback wrapper
 function playAudio(pack, eventName) {
-    if (textOnlyPacks.has(pack)) {
+    const packConfig = packsById.get(pack);
+    if (!packConfig || packConfig.textOnly || !packConfig.audio) {
         return;
     }
     
@@ -56,13 +58,9 @@ function playAudio(pack, eventName) {
         currentAudio.currentTime = 0;
     }
     
-    let audioSrc = `audio/${pack}/audio/${eventName}/0.mp3`;
-    if (pack === "en_gordon") {
-        audioSrc = `audio/${pack}/${eventName}/0.mp3`;
-    }
-    if (pack === "en_spicy" && eventName === "slap") {
-        audioSrc = `audio/${pack}/audio/${eventName}/00.mp4`;
-    }
+    const eventOverrides = packConfig.audio.events || {};
+    const extension = packConfig.audio.extension || "mp3";
+    const audioSrc = eventOverrides[eventName] || `${packConfig.audio.base}/${eventName}/0.${extension}`;
 
     // Attempt to play
     currentAudio = new Audio(audioSrc);
@@ -116,82 +114,51 @@ function updateMoodState(eventName) {
     document.documentElement.style.setProperty('--term-text', colors[currentMood]);
 }
 
-packBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        packBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentPack = btn.dataset.pack;
-        logEventEl.innerText = `Switched pack`;
-        logResponseEl.innerText = `Now using ${currentPack}`;
+function renderPackSelector(config) {
+    packSelectorEl.innerHTML = "";
+    packsById = new Map(config.packs.map(pack => [pack.id, pack]));
+
+    config.packs.forEach(pack => {
+        const btn = document.createElement("button");
+        btn.className = "pack-btn";
+        btn.dataset.pack = pack.id;
+        btn.type = "button";
+        btn.innerText = pack.label;
+        if (pack.id === currentPack) {
+            btn.classList.add("active");
+        }
+
+        btn.addEventListener('click', () => {
+            document.querySelectorAll(".pack-btn").forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentPack = btn.dataset.pack;
+            logEventEl.innerText = `Switched pack`;
+            logResponseEl.innerText = `Now using ${currentPack}`;
+        });
+
+        packSelectorEl.appendChild(btn);
     });
-});
+}
+
+async function loadDemoConfig() {
+    const response = await fetch("packs.json");
+    if (!response.ok) {
+        throw new Error(`Failed to load packs.json: ${response.status}`);
+    }
+    return response.json();
+}
 
 eventBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
+    btn.addEventListener('click', () => {
+        if (!demoConfig) {
+            logResponseEl.innerText = "Demo configuration is still loading.";
+            return;
+        }
         const eventName = btn.dataset.event;
+        const packConfig = packsById.get(currentPack);
         logEventEl.innerText = btn.innerText;
 
-        // Custom logs for demo immersion
-        const responses = {
-            "en_default": {
-                "slap": `"Hey! Not cool."`,
-                "charger_in": `"Mmm, that's the good stuff."`,
-                "charger_out": `"Wait, I wasn't done!"`,
-                "usb_in": `"Ooh, a new friend!"`,
-                "usb_out": `"Bye bye!"`,
-                "lid_close": `"Sweet dreams!"`
-            },
-            "en_spicy": {
-                "slap": `*loud moan* "Don't stop!"`,
-                "charger_in": `"Ohhh, that's the spot~"`,
-                "charger_out": `"I was SO close!"`,
-                "usb_in": `"Mhm... go deeper..."`,
-                "usb_out": `"That was... quick."`,
-                "lid_close": `"Was it good for you?~"`
-            },
-            "ja_spicy": {
-                "slap": `"やめてください！"`,
-                "charger_in": `"あぁっ、電気が流れてる〜"`,
-                "charger_out": `"ああっ、途中でやめないで！"`,
-                "usb_in": `"入る〜"`,
-                "usb_out": `"えっ、もう抜いちゃうの？"`,
-                "lid_close": `"よかった？〜"`
-            },
-            "hi_default": {
-                "slap": `"अरे! यह क्या था?"`,
-                "charger_in": `"म्म्म, यह अच्छा है।"`,
-                "charger_out": `"रुको, मैं अभी खत्म नहीं हुआ!"`,
-                "usb_in": `"ओह, नया दोस्त!"`,
-                "usb_out": `"बाय बाय!"`,
-                "lid_close": `"मीठे सपने!"`
-            },
-            "hi_spicy": {
-                "slap": `"म्म्म!" "फिर से करो~"`,
-                "charger_in": `"ओह्ह, वही जगह~"`,
-                "charger_out": `"मैं बहुत करीब थी!"`,
-                "usb_in": `"म्म्म... और अंदर डालो..."`,
-                "usb_out": `"वह था... जल्दी।"`,
-                "lid_close": `"क्या तुम्हारे लिए अच्छा था?~"`
-            },
-            "en_gordon": {
-                "slap": `"You absolute donkey! What are you doing!?"`,
-                "charger_in": `"Yes, chef! Thank god for that!"`,
-                "charger_out": `"What are you doing?! We are in the middle of dinner service!"`,
-                "usb_in": `"Finally! Some fresh ingredients!"`,
-                "usb_out": `"Get that absolute garbage out of my port!"`,
-                "lid_close": `"Shut it down! Dinner service is over!"`
-            },
-            "en_pirate": {
-                "slap": `"Arr! What be that fer?!"`,
-                "charger_in": `"Mmm, that be th' good stuff."`,
-                "charger_out": `"Wait, I weren't done!"`,
-                "usb_in": `"Ahoy there, little device!"`,
-                "usb_out": `"Fare thee well!"`,
-                "lid_close": `"Sweet dreams, ye sea dog!"`
-            }
-        };
-
-        const responseText = responses[currentPack]?.[eventName] || `"*${eventName} action triggered*"`;
+        const responseText = packConfig?.responses?.[eventName] || `"*${eventName} action triggered*"`;
         logResponseEl.innerText = responseText;
 
         updateMoodState(eventName);
@@ -199,7 +166,20 @@ eventBtns.forEach(btn => {
     });
 });
 
-// Initialize
-faceEl.innerText = faces.happy;
-labelEl.innerText = labels.happy;
-document.documentElement.style.setProperty('--term-text', colors.happy);
+async function initializeDemo() {
+    try {
+        demoConfig = await loadDemoConfig();
+        currentPack = demoConfig.defaultPack || demoConfig.packs[0]?.id || currentPack;
+        renderPackSelector(demoConfig);
+    } catch (error) {
+        console.error(error);
+        packSelectorEl.innerHTML = `<button class="pack-btn active" disabled>Demo config unavailable</button>`;
+        logResponseEl.innerText = "Demo config could not be loaded.";
+    }
+
+    faceEl.innerText = faces.happy;
+    labelEl.innerText = labels.happy;
+    document.documentElement.style.setProperty('--term-text', colors.happy);
+}
+
+initializeDemo();
