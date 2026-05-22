@@ -1,0 +1,72 @@
+version: 2
+
+project_name: moody
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - id: moody
+    main: .
+    binary: moody
+    goos:
+      - darwin
+    goarch:
+      - arm64
+    env:
+      - CGO_ENABLED=1
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+
+archives:
+  - id: moody
+    ids:
+      - moody
+    formats:
+      - tar.gz
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files:
+      - LICENSE
+      - README.md
+
+checksum:
+  name_template: checksums.txt
+
+snapshot:
+  version_template: "{{ incpatch .Version }}-next"
+
+changelog:
+  use: github
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"
+      - "^chore:"
+
+brews:
+  - name: moody
+    ids:
+      - moody
+    repository:
+      owner: dinakars777
+      name: homebrew-tap
+      branch: main
+      token: "{{ .Env.TAP_GITHUB_TOKEN }}"
+    directory: Formula
+    commit_author:
+      name: dinakars777
+      email: dinakars777@users.noreply.github.com
+    commit_msg_template: "Update moody formula to {{ .Tag }}"
+    homepage: "https://github.com/dinakars777/moody"
+    description: "Your MacBook has feelings"
+    license: MIT
+    caveats: |
+      Moody is macOS Apple Silicon only.
+      Use sudo when accelerometer access is needed:
+        sudo moody
+    test: |
+      system "#{bin}/moody", "--version"

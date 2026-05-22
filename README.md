@@ -21,12 +21,23 @@ Slap it too much? It gets grumpy. Charge it? It forgives you. Maybe.
 
 ## Install
 
-Build from source:
+Using Homebrew:
+
+```bash
+brew install dinakars777/tap/moody
+```
+
+Developer build from source:
 
 ```bash
 go install github.com/dinakars777/moody@latest
 sudo cp "$(go env GOPATH)/bin/moody" /usr/local/bin/moody
 ```
+
+Release builds report the tagged version. Source builds may report `dev` unless
+you build with `-ldflags "-X main.version=<version>"`.
+
+Maintainers: see [docs/releasing.md](docs/releasing.md) for the tag release flow.
 
 ## Usage
 
