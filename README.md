@@ -107,6 +107,9 @@ Your MacBook's mood shifts with every event:
 # List installed packs
 moody --packs
 
+# Validate a local community pack
+moody pack validate ./my-pack
+
 # Use NSFW pack
 sudo moody --spicy
 ```
@@ -179,6 +182,8 @@ Contributions welcome! Especially:
 - [ ] HAL 9000 voice pack
 
 When adding a built-in personality, update the interactive demo in `docs/` at the same time.
+
+Voice pack authors can start with [docs/voice-pack-authoring.md](docs/voice-pack-authoring.md).
 
 ## License
 
