@@ -102,6 +102,7 @@ sudo moody --spicy
 - `ja_spicy` — Anime-inspired Japanese pack (NSFW 🔞)
 - `hi_default` — Hindi default pack (SFW)
 - `hi_spicy` — Hindi spicy pack (NSFW 🔞)
+- `en_pirate` — Pirate speak pack (SFW)
 
 ## Options
 
@@ -150,6 +151,8 @@ Contributions welcome! Especially:
 - [ ] More AI IDE integrations (Cursor, Windsurf)
 - [ ] Gordon Ramsay voice pack
 - [ ] HAL 9000 voice pack
+
+When adding a built-in personality, update the interactive demo in `docs/` at the same time.
 
 ## License
 
