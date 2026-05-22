@@ -48,7 +48,7 @@ sudo moody
 # NSFW mode 😏
 sudo moody --spicy
 
-# Show live mood dashboard
+# Show live animated mood dashboard
 sudo moody --dashboard
 
 # List available sensors
@@ -130,7 +130,7 @@ sudo moody --spicy
 |------|-------------|
 | `--spicy` | Enable NSFW voice pack |
 | `--pack <NAME>` | Use specific voice pack |
-| `--dashboard` | Show live TUI mood dashboard |
+| `--dashboard` | Show live animated TUI mood dashboard |
 | `--mute` | Track mood without responses |
 | `--silent` | Disable TTS audio (text output only) |
 | `--fast` | Faster polling, shorter cooldown |
