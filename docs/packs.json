@@ -1,0 +1,115 @@
+{
+  "defaultPack": "en_spicy",
+  "packs": [
+    {
+      "id": "en_spicy",
+      "label": "NSFW (Spicy)",
+      "textOnly": false,
+      "audio": {
+        "base": "audio/en_spicy/audio",
+        "extension": "mp3",
+        "events": {
+          "slap": "audio/en_spicy/audio/slap/00.mp4"
+        }
+      },
+      "responses": {
+        "slap": "*loud moan* \"Don't stop!\"",
+        "charger_in": "\"Ohhh, that's the spot~\"",
+        "charger_out": "\"I was SO close!\"",
+        "usb_in": "\"Mhm... go deeper...\"",
+        "usb_out": "\"That was... quick.\"",
+        "lid_close": "\"Was it good for you?~\""
+      }
+    },
+    {
+      "id": "en_default",
+      "label": "SFW (Coworker)",
+      "textOnly": false,
+      "audio": {
+        "base": "audio/en_default/audio",
+        "extension": "mp3"
+      },
+      "responses": {
+        "slap": "\"Hey! Not cool.\"",
+        "charger_in": "\"Mmm, that's the good stuff.\"",
+        "charger_out": "\"Wait, I wasn't done!\"",
+        "usb_in": "\"Ooh, a new friend!\"",
+        "usb_out": "\"Bye bye!\"",
+        "lid_close": "\"Sweet dreams!\""
+      }
+    },
+    {
+      "id": "ja_spicy",
+      "label": "Anime (ja_spicy)",
+      "textOnly": false,
+      "audio": {
+        "base": "audio/ja_spicy/audio",
+        "extension": "mp3"
+      },
+      "responses": {
+        "slap": "\"やめてください！\"",
+        "charger_in": "\"あぁっ、電気が流れてる〜\"",
+        "charger_out": "\"ああっ、途中でやめないで！\"",
+        "usb_in": "\"入る〜\"",
+        "usb_out": "\"えっ、もう抜いちゃうの？\"",
+        "lid_close": "\"よかった？〜\""
+      }
+    },
+    {
+      "id": "hi_spicy",
+      "label": "Hindi NSFW 🔥",
+      "textOnly": true,
+      "responses": {
+        "slap": "\"म्म्म!\" \"फिर से करो~\"",
+        "charger_in": "\"ओह्ह, वही जगह~\"",
+        "charger_out": "\"मैं बहुत करीब थी!\"",
+        "usb_in": "\"म्म्म... और अंदर डालो...\"",
+        "usb_out": "\"वह था... जल्दी।\"",
+        "lid_close": "\"क्या तुम्हारे लिए अच्छा था?~\""
+      }
+    },
+    {
+      "id": "hi_default",
+      "label": "Hindi SFW",
+      "textOnly": true,
+      "responses": {
+        "slap": "\"अरे! यह क्या था?\"",
+        "charger_in": "\"म्म्म, यह अच्छा है।\"",
+        "charger_out": "\"रुको, मैं अभी खत्म नहीं हुआ!\"",
+        "usb_in": "\"ओह, नया दोस्त!\"",
+        "usb_out": "\"बाय बाय!\"",
+        "lid_close": "\"मीठे सपने!\""
+      }
+    },
+    {
+      "id": "en_gordon",
+      "label": "Gordon Ramsay",
+      "textOnly": false,
+      "audio": {
+        "base": "audio/en_gordon",
+        "extension": "mp3"
+      },
+      "responses": {
+        "slap": "\"You absolute donkey! What are you doing!?\"",
+        "charger_in": "\"Yes, chef! Thank god for that!\"",
+        "charger_out": "\"What are you doing?! We are in the middle of dinner service!\"",
+        "usb_in": "\"Finally! Some fresh ingredients!\"",
+        "usb_out": "\"Get that absolute garbage out of my port!\"",
+        "lid_close": "\"Shut it down! Dinner service is over!\""
+      }
+    },
+    {
+      "id": "en_pirate",
+      "label": "Pirate Speak",
+      "textOnly": true,
+      "responses": {
+        "slap": "\"Arr! What be that fer?!\"",
+        "charger_in": "\"Mmm, that be th' good stuff.\"",
+        "charger_out": "\"Wait, I weren't done!\"",
+        "usb_in": "\"Ahoy there, little device!\"",
+        "usb_out": "\"Fare thee well!\"",
+        "lid_close": "\"Sweet dreams, ye sea dog!\""
+      }
+    }
+  ]
+}

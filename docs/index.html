@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>moody — Your MacBook has feelings.</title>
+    <link rel="icon" href="data:,">
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
@@ -63,14 +64,8 @@
             <!-- Right: Controls -->
             <div class="controls glass">
                 <h3>Select Personality</h3>
-                <div class="pack-selector">
-                    <button class="pack-btn active" data-pack="en_spicy">NSFW (Spicy)</button>
-                    <button class="pack-btn" data-pack="en_default">SFW (Coworker)</button>
-                    <button class="pack-btn" data-pack="ja_spicy">Anime (ja_spicy)</button>
-                    <button class="pack-btn" data-pack="hi_spicy">Hindi NSFW 🔥</button>
-                    <button class="pack-btn" data-pack="hi_default">Hindi SFW</button>
-                    <button class="pack-btn" data-pack="en_gordon">Gordon Ramsay</button>
-                    <button class="pack-btn" data-pack="en_pirate">Pirate Speak</button>
+                <div class="pack-selector" id="pack-selector" aria-label="Personality packs">
+                    <button class="pack-btn active" disabled>Loading personalities...</button>
                 </div>
                 
                 <p class="demo-note">💡 Some packs use TTS (text-only in demo)</p>
