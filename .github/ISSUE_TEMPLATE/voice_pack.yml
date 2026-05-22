@@ -1,0 +1,31 @@
+name: Voice Pack Proposal
+description: Propose or contribute a Moody voice pack.
+title: "[Voice Pack]: "
+labels:
+  - voice-pack
+body:
+  - type: input
+    id: pack
+    attributes:
+      label: Pack Name
+      placeholder: en_pirate
+    validations:
+      required: true
+  - type: textarea
+    id: concept
+    attributes:
+      label: Concept
+      description: Describe the language, personality, tone, and whether it is NSFW.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation
+      description: Paste output from `moody pack validate ./my-pack`.
+      render: text
+  - type: textarea
+    id: demo
+    attributes:
+      label: Demo Update
+      description: If this is a built-in personality, describe the matching `docs/` demo update.

@@ -77,6 +77,8 @@ sudo moody --verbose
 - `sudo` (for accelerometer access)
 - Go 1.26.1+ (if building from source)
 
+See [docs/compatibility.md](docs/compatibility.md) for the sensor support matrix.
+
 ## How It Works
 
 1. Reads accelerometer data via IOKit HID to detect physical impacts
@@ -184,6 +186,11 @@ Contributions welcome! Especially:
 When adding a built-in personality, update the interactive demo in `docs/` at the same time.
 
 Voice pack authors can start with [docs/voice-pack-authoring.md](docs/voice-pack-authoring.md).
+Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR.
+
+## Privacy
+
+Moody runs locally and does not send telemetry. See [docs/privacy.md](docs/privacy.md).
 
 ## License
 
