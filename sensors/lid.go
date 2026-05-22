@@ -12,7 +12,7 @@ static int get_clamshell_state(void) {
     io_registry_entry_t rootDomain;
     CFBooleanRef clamshellState;
     int result = -1;
-    
+
     rootDomain = IORegistryEntryFromPath(kIOMainPortDefault,
         "IOService:/IOResources/IODisplayWrangler");
     if (!rootDomain) {
@@ -21,15 +21,15 @@ static int get_clamshell_state(void) {
             IOServiceMatching("IOPMrootDomain"));
     }
     if (!rootDomain) return -1;
-    
+
     clamshellState = IORegistryEntryCreateCFProperty(rootDomain,
         CFSTR("AppleClamshellState"), kCFAllocatorDefault, 0);
-    
+
     if (clamshellState) {
         result = CFBooleanGetValue(clamshellState) ? 1 : 0;
         CFRelease(clamshellState);
     }
-    
+
     IOObjectRelease(rootDomain);
     return result;
 }

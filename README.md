@@ -2,7 +2,7 @@
 
 Your MacBook has feelings. And it's not afraid to express them.
 
-![Demo](demo.gif)
+[Interactive demo](https://dinakars777.github.io/moody/)
 
 ## What Is This?
 
@@ -21,7 +21,7 @@ Slap it too much? It gets grumpy. Charge it? It forgives you. Maybe.
 
 ## Install
 
-Download from [releases](https://github.com/dinakars777/moody/releases/latest), or build from source:
+Build from source:
 
 ```bash
 go install github.com/dinakars777/moody@latest
@@ -60,18 +60,19 @@ sudo moody --verbose
 
 - macOS on Apple Silicon (M2+ or M1 Pro)
 - `sudo` (for accelerometer access)
-- Go 1.22+ (if building from source)
+- Go 1.26.1+ (if building from source)
 
 ## How It Works
 
 1. Reads accelerometer data via IOKit HID to detect physical impacts
 2. Monitors USB, power, battery, and lid state via IOKit
 3. Monitors WiFi and Headphone connections using `networksetup` and `CoreAudio`
-4. Monitors AI IDE activity (Kiro, Cursor, Windsurf) for code generation completion
-5. Maintains a 3-axis mood engine (happiness, energy, trust)
-6. Mood persists to `~/.moody/state.json` — your MacBook remembers
-7. Selects personality-appropriate responses based on current mood
-8. Speaks the response aloud using macOS Text-to-Speech (TTS) with mood-specific voices
+4. Monitors external display changes
+5. Monitors AI IDE activity (Kiro) for code generation completion
+6. Maintains a 3-axis mood engine (happiness, energy, trust)
+7. Mood persists to `~/.moody/state.json` — your MacBook remembers
+8. Selects personality-appropriate responses based on current mood
+9. Speaks the response aloud using macOS Text-to-Speech (TTS) with mood-specific voices
 
 ## The Mood System
 
@@ -98,6 +99,9 @@ sudo moody --spicy
 **Built-in packs:**
 - `en_default` — Passive-aggressive office coworker (SFW)
 - `en_spicy` — Your MacBook is... very friendly (NSFW 🔞)
+- `ja_spicy` — Anime-inspired Japanese pack (NSFW 🔞)
+- `hi_default` — Hindi default pack (SFW)
+- `hi_spicy` — Hindi spicy pack (NSFW 🔞)
 
 ## Options
 
@@ -117,10 +121,12 @@ sudo moody --spicy
 | `--no-lid` | Disable lid sensor |
 | `--no-wifi` | Disable WiFi sensor |
 | `--no-headphones` | Disable headphone sensor |
+| `--no-display` | Disable external display sensor |
 | `--no-ai` | Disable AI IDE monitoring |
 | `--verbose` | Log all events |
 | `--list-sensors` | Show available sensors |
 | `--packs` | List voice packs |
+| `--version` | Print version |
 
 ## AI IDE Integration
 
