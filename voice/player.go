@@ -33,6 +33,7 @@ type Player struct {
 	speaking bool
 	enabled  bool
 	language string // Language code for voice selection
+	current  *exec.Cmd
 }
 
 // NewPlayer creates an audio player
@@ -49,39 +50,22 @@ func (p *Player) SetLanguage(lang string) {
 
 // Speak plays a voice line using macOS TTS with mood-appropriate voice
 func (p *Player) Speak(text string, moodLabel mood.MoodLabel) {
-	if !p.enabled || text == "" {
+	if text == "" {
 		return
 	}
 
-	p.mu.Lock()
-	if p.speaking {
-		p.mu.Unlock()
-		return // Don't overlap speech
+	voice := p.getVoiceForLanguage(moodLabel)
+	rate := moodRates[moodLabel]
+	if rate == 0 {
+		rate = 200
 	}
-	p.speaking = true
-	p.mu.Unlock()
 
-	go func() {
-		defer func() {
-			p.mu.Lock()
-			p.speaking = false
-			p.mu.Unlock()
-		}()
-
-		// Select voice based on language
-		voice := p.getVoiceForLanguage(moodLabel)
-		rate := moodRates[moodLabel]
-		if rate == 0 {
-			rate = 200
-		}
-
-		cmd := exec.Command("say",
-			"-v", voice,
-			"-r", fmt.Sprintf("%d", rate),
-			text,
-		)
-		cmd.Run() // Blocks until speech finishes
-	}()
+	cmd := exec.Command("say",
+		"-v", voice,
+		"-r", fmt.Sprintf("%d", rate),
+		text,
+	)
+	p.start(cmd)
 }
 
 // SpeakSync plays a voice line and waits for it to finish
@@ -129,37 +113,25 @@ func (p *Player) getVoiceForLanguage(moodLabel mood.MoodLabel) string {
 
 // PlayFile plays an audio file using macOS `afplay`
 func (p *Player) PlayFile(path string) {
-	if !p.enabled || path == "" {
+	if path == "" {
 		return
 	}
 
-	p.mu.Lock()
-	if p.speaking {
-		p.mu.Unlock()
-		return // Don't overlap speech
-	}
-	p.speaking = true
-	p.mu.Unlock()
-
-	go func() {
-		defer func() {
-			p.mu.Lock()
-			p.speaking = false
-			p.mu.Unlock()
-		}()
-
-		cmd := exec.Command("afplay", path)
-		cmd.Run()
-	}()
+	cmd := exec.Command("afplay", path)
+	p.start(cmd)
 }
 
 // Stop interrupts any current speech
 func (p *Player) Stop() {
-	exec.Command("killall", "say").Run()
-	exec.Command("killall", "afplay").Run()
 	p.mu.Lock()
+	cmd := p.current
+	p.current = nil
 	p.speaking = false
 	p.mu.Unlock()
+
+	if cmd != nil && cmd.Process != nil {
+		_ = cmd.Process.Kill()
+	}
 }
 
 // SetEnabled enables or disables audio playback
@@ -174,6 +146,36 @@ func (p *Player) IsSpeaking() bool {
 	p.mu.Lock()
 	defer p.mu.Unlock()
 	return p.speaking
+}
+
+func (p *Player) start(cmd *exec.Cmd) {
+	p.mu.Lock()
+	if !p.enabled || p.speaking {
+		p.mu.Unlock()
+		return
+	}
+	if err := cmd.Start(); err != nil {
+		p.mu.Unlock()
+		return
+	}
+	p.current = cmd
+	p.speaking = true
+	p.mu.Unlock()
+
+	go p.wait(cmd)
+}
+
+func (p *Player) wait(cmd *exec.Cmd) {
+	defer func() {
+		p.mu.Lock()
+		if p.current == cmd {
+			p.current = nil
+			p.speaking = false
+		}
+		p.mu.Unlock()
+	}()
+
+	_ = cmd.Wait()
 }
 
 // ListVoices returns available macOS system voices
