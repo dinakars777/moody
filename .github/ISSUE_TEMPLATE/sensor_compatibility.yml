@@ -1,0 +1,60 @@
+name: Sensor Compatibility
+description: Report a sensor that is unavailable or behaving incorrectly.
+title: "[Sensor]: "
+labels:
+  - compatibility
+body:
+  - type: dropdown
+    id: sensor
+    attributes:
+      label: Sensor
+      options:
+        - Accelerometer
+        - Power/Battery
+        - USB
+        - Lid
+        - WiFi
+        - Headphones
+        - Display
+        - AI IDE Monitor
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: doctor
+    attributes:
+      label: Doctor Output
+      description: Run `moody doctor --json` and paste the output here after reviewing it for sensitive details.
+      render: json
+    validations:
+      required: true
+  - type: input
+    id: model
+    attributes:
+      label: Mac Model And Chip
+      placeholder: MacBook Pro, M3 Pro
+    validations:
+      required: true
+  - type: input
+    id: macos
+    attributes:
+      label: macOS Version
+      placeholder: 15.5
+    validations:
+      required: true
+  - type: dropdown
+    id: sudo
+    attributes:
+      label: Ran With sudo?
+      options:
+        - "Yes"
+        - "No"
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: What did you expect, and what happened?
+    validations:
+      required: true

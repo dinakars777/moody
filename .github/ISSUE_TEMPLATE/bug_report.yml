@@ -1,0 +1,40 @@
+name: Bug Report
+description: Report a Moody bug that is not hardware-specific.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps To Reproduce
+      description: Include the command you ran and what you expected.
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: Paste relevant output from `moody --verbose`.
+      render: text
+  - type: input
+    id: version
+    attributes:
+      label: Moody Version
+      placeholder: moody --version
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: macOS version, Mac model, install method.
