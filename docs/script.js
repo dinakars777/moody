@@ -36,6 +36,7 @@ const eventBtns = document.querySelectorAll(".event-btn");
 let currentPack = "en_spicy";
 let currentMood = "happy";
 let currentAudio = null;
+const textOnlyPacks = new Set(["hi_default", "hi_spicy", "en_pirate"]);
 
 // State tracking relative to 0% to 100%
 let state = {
@@ -46,9 +47,8 @@ let state = {
 
 // Simple audio playback wrapper
 function playAudio(pack, eventName) {
-    // Skip audio for text-only packs (Hindi)
-    if (pack.startsWith("hi_")) {
-        return; // Hindi packs use TTS, not audio files
+    if (textOnlyPacks.has(pack)) {
+        return;
     }
     
     if (currentAudio) {
@@ -180,6 +180,14 @@ eventBtns.forEach(btn => {
                 "usb_in": `"Finally! Some fresh ingredients!"`,
                 "usb_out": `"Get that absolute garbage out of my port!"`,
                 "lid_close": `"Shut it down! Dinner service is over!"`
+            },
+            "en_pirate": {
+                "slap": `"Arr! What be that fer?!"`,
+                "charger_in": `"Mmm, that be th' good stuff."`,
+                "charger_out": `"Wait, I weren't done!"`,
+                "usb_in": `"Ahoy there, little device!"`,
+                "usb_out": `"Fare thee well!"`,
+                "lid_close": `"Sweet dreams, ye sea dog!"`
             }
         };
 
