@@ -12,43 +12,43 @@ import (
 type EventType int
 
 const (
-	EventSlap         EventType = iota // Accelerometer impact
-	EventUSBIn                         // USB device connected
-	EventUSBOut                        // USB device disconnected
-	EventChargerIn                     // Power adapter connected
-	EventChargerOut                    // Power adapter disconnected
-	EventBatteryLow                    // Battery below 20%
-	EventBatteryCrit                   // Battery below 5%
-	EventLidClose                      // Lid closing
-	EventLidOpen                       // Lid opening
-	EventHeadphonesIn                  // Audio jack connected
-	EventHeadphonesOut                 // Audio jack disconnected
-	EventWiFiLost                      // WiFi disconnected
-	EventWiFiBack                      // WiFi reconnected
-	EventDisplayIn                     // External display connected
-	EventDisplayOut                    // External display disconnected
-	EventAIDone                        // AI finished generating code
+	EventSlap          EventType = iota // Accelerometer impact
+	EventUSBIn                          // USB device connected
+	EventUSBOut                         // USB device disconnected
+	EventChargerIn                      // Power adapter connected
+	EventChargerOut                     // Power adapter disconnected
+	EventBatteryLow                     // Battery below 20%
+	EventBatteryCrit                    // Battery below 5%
+	EventLidClose                       // Lid closing
+	EventLidOpen                        // Lid opening
+	EventHeadphonesIn                   // Audio jack connected
+	EventHeadphonesOut                  // Audio jack disconnected
+	EventWiFiLost                       // WiFi disconnected
+	EventWiFiBack                       // WiFi reconnected
+	EventDisplayIn                      // External display connected
+	EventDisplayOut                     // External display disconnected
+	EventAIDone                         // AI finished generating code
 )
 
 // EventName returns a string identifier for voice pack lookups
 func EventName(e EventType) string {
 	names := map[EventType]string{
-		EventSlap:         "slap",
-		EventUSBIn:        "usb_in",
-		EventUSBOut:       "usb_out",
-		EventChargerIn:    "charger_in",
-		EventChargerOut:   "charger_out",
-		EventBatteryLow:   "battery_low",
-		EventBatteryCrit:  "battery_crit",
-		EventLidClose:     "lid_close",
-		EventLidOpen:      "lid_open",
-		EventHeadphonesIn: "headphones_in",
-		EventHeadphonesOut:"headphones_out",
-		EventWiFiLost:     "wifi_lost",
-		EventWiFiBack:     "wifi_back",
-		EventDisplayIn:    "display_in",
-		EventDisplayOut:   "display_out",
-		EventAIDone:       "ai_done",
+		EventSlap:          "slap",
+		EventUSBIn:         "usb_in",
+		EventUSBOut:        "usb_out",
+		EventChargerIn:     "charger_in",
+		EventChargerOut:    "charger_out",
+		EventBatteryLow:    "battery_low",
+		EventBatteryCrit:   "battery_crit",
+		EventLidClose:      "lid_close",
+		EventLidOpen:       "lid_open",
+		EventHeadphonesIn:  "headphones_in",
+		EventHeadphonesOut: "headphones_out",
+		EventWiFiLost:      "wifi_lost",
+		EventWiFiBack:      "wifi_back",
+		EventDisplayIn:     "display_in",
+		EventDisplayOut:    "display_out",
+		EventAIDone:        "ai_done",
 	}
 	if n, ok := names[e]; ok {
 		return n
@@ -59,22 +59,22 @@ func EventName(e EventType) string {
 // EventLabel returns a human-readable label
 func EventLabel(e EventType) string {
 	labels := map[EventType]string{
-		EventSlap:         "Slap detected",
-		EventUSBIn:        "USB device connected",
-		EventUSBOut:       "USB device disconnected",
-		EventChargerIn:    "Charger connected",
-		EventChargerOut:   "Charger disconnected",
-		EventBatteryLow:   "Battery low",
-		EventBatteryCrit:  "Battery critical",
-		EventLidClose:     "Lid closed",
-		EventLidOpen:      "Lid opened",
-		EventHeadphonesIn: "Headphones connected",
-		EventHeadphonesOut:"Headphones disconnected",
-		EventWiFiLost:     "WiFi disconnected",
-		EventWiFiBack:     "WiFi reconnected",
-		EventDisplayIn:    "Display connected",
-		EventDisplayOut:   "Display disconnected",
-		EventAIDone:       "AI finished",
+		EventSlap:          "Slap detected",
+		EventUSBIn:         "USB device connected",
+		EventUSBOut:        "USB device disconnected",
+		EventChargerIn:     "Charger connected",
+		EventChargerOut:    "Charger disconnected",
+		EventBatteryLow:    "Battery low",
+		EventBatteryCrit:   "Battery critical",
+		EventLidClose:      "Lid closed",
+		EventLidOpen:       "Lid opened",
+		EventHeadphonesIn:  "Headphones connected",
+		EventHeadphonesOut: "Headphones disconnected",
+		EventWiFiLost:      "WiFi disconnected",
+		EventWiFiBack:      "WiFi reconnected",
+		EventDisplayIn:     "Display connected",
+		EventDisplayOut:    "Display disconnected",
+		EventAIDone:        "AI finished",
 	}
 	if l, ok := labels[e]; ok {
 		return l
@@ -85,9 +85,9 @@ func EventLabel(e EventType) string {
 // HardwareEvent represents a detected hardware change
 type HardwareEvent struct {
 	Type      EventType
-	Intensity float64   // 0.0-1.0, for accelerometer force
+	Intensity float64 // 0.0-1.0, for accelerometer force
 	Timestamp time.Time
-	Meta      string    // e.g., USB device name, WiFi SSID
+	Meta      string // e.g., USB device name, WiFi SSID
 }
 
 // moodImpact defines how each event shifts the mood
@@ -98,22 +98,22 @@ type moodImpact struct {
 }
 
 var impacts = map[EventType]moodImpact{
-	EventSlap:         {-0.15, +0.05, -0.10},
-	EventUSBIn:        {+0.05, +0.05, +0.02},
-	EventUSBOut:       {-0.05, -0.02, -0.05},
-	EventChargerIn:    {+0.15, +0.10, +0.05},
-	EventChargerOut:   {-0.10, -0.05, -0.05},
-	EventBatteryLow:   {-0.10, -0.15, 0},
-	EventBatteryCrit:  {-0.20, -0.25, -0.10},
-	EventLidClose:     {0, -0.05, 0},
-	EventLidOpen:      {+0.05, +0.05, 0},
-	EventHeadphonesIn: {+0.05, 0, +0.05},
-	EventHeadphonesOut:{-0.03, +0.02, -0.02},
-	EventWiFiLost:     {-0.15, -0.05, -0.10},
-	EventWiFiBack:     {+0.10, +0.05, +0.05},
-	EventDisplayIn:    {+0.05, +0.05, +0.02},
-	EventDisplayOut:   {-0.03, -0.02, 0},
-	EventAIDone:       {+0.10, +0.05, +0.05}, // AI finishing makes Mac happy!
+	EventSlap:          {-0.15, +0.05, -0.10},
+	EventUSBIn:         {+0.05, +0.05, +0.02},
+	EventUSBOut:        {-0.05, -0.02, -0.05},
+	EventChargerIn:     {+0.15, +0.10, +0.05},
+	EventChargerOut:    {-0.10, -0.05, -0.05},
+	EventBatteryLow:    {-0.10, -0.15, 0},
+	EventBatteryCrit:   {-0.20, -0.25, -0.10},
+	EventLidClose:      {0, -0.05, 0},
+	EventLidOpen:       {+0.05, +0.05, 0},
+	EventHeadphonesIn:  {+0.05, 0, +0.05},
+	EventHeadphonesOut: {-0.03, +0.02, -0.02},
+	EventWiFiLost:      {-0.15, -0.05, -0.10},
+	EventWiFiBack:      {+0.10, +0.05, +0.05},
+	EventDisplayIn:     {+0.05, +0.05, +0.02},
+	EventDisplayOut:    {-0.03, -0.02, 0},
+	EventAIDone:        {+0.10, +0.05, +0.05}, // AI finishing makes Mac happy!
 }
 
 // Engine manages mood state and processes events

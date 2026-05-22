@@ -1,3 +1,5 @@
 moody
+moody-*
 *.exe
 .DS_Store
+docs/server.log

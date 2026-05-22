@@ -15,11 +15,11 @@ static int count_usb_devices(void) {
     int count = 0;
     CFMutableDictionaryRef match = IOServiceMatching(kIOUSBDeviceClassName);
     if (!match) return 0;
-    
+
     io_iterator_t iter;
     kern_return_t kr = IOServiceGetMatchingServices(kIOMainPortDefault, match, &iter);
     if (kr != KERN_SUCCESS) return 0;
-    
+
     io_service_t device;
     while ((device = IOIteratorNext(iter)) != 0) {
         count++;
@@ -34,18 +34,18 @@ static void get_last_usb_name(char *buf, int bufLen) {
     buf[0] = '\0';
     CFMutableDictionaryRef match = IOServiceMatching(kIOUSBDeviceClassName);
     if (!match) return;
-    
+
     io_iterator_t iter;
     kern_return_t kr = IOServiceGetMatchingServices(kIOMainPortDefault, match, &iter);
     if (kr != KERN_SUCCESS) return;
-    
+
     io_service_t device;
     io_service_t lastDevice = 0;
     while ((device = IOIteratorNext(iter)) != 0) {
         if (lastDevice) IOObjectRelease(lastDevice);
         lastDevice = device;
     }
-    
+
     if (lastDevice) {
         io_name_t name;
         if (IORegistryEntryGetName(lastDevice, name) == KERN_SUCCESS) {

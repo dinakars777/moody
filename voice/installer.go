@@ -59,7 +59,7 @@ func InstallPack(repoURL string) error {
 	destDir := filepath.Join(homeDir, ".moody", "packs", packName)
 
 	fmt.Printf("   Updating local pack at: %s\n", destDir)
-	
+
 	// Remove old version if it exists
 	if _, err := os.Stat(destDir); err == nil {
 		os.RemoveAll(destDir)
