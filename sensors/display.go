@@ -7,6 +7,8 @@ package sensors
 import "C"
 
 import (
+	"fmt"
+	"runtime"
 	"sync"
 	"time"
 
@@ -29,7 +31,31 @@ func NewDisplay() *Display {
 func (d *Display) Name() string { return "Display (External Monitor)" }
 
 func (d *Display) Available() bool {
-	return true
+	return d.Status().Available
+}
+
+func (d *Display) Status() Status {
+	status := Status{
+		ID:        "display",
+		Name:      d.Name(),
+		Supported: runtime.GOOS == "darwin",
+		Available: runtime.GOOS == "darwin",
+		Details:   map[string]string{},
+	}
+	if !status.Supported {
+		status.Reason = "display probing is only implemented for macOS"
+		status.SuggestedFix = "Run Moody on macOS, or start without this sensor using --no-display"
+		return status
+	}
+
+	count := d.getDisplayCount()
+	status.Details["activeDisplays"] = fmt.Sprintf("%d", count)
+	if count == 0 {
+		status.Available = false
+		status.Reason = "macOS did not return any active displays"
+		status.SuggestedFix = "Check display permissions/state, or start without this sensor using --no-display"
+	}
+	return status
 }
 
 func (d *Display) Start(events chan<- mood.HardwareEvent) error {

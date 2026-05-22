@@ -24,6 +24,9 @@ func main() {
 	// Subcommand handling
 	if len(os.Args) > 1 && !strings.HasPrefix(os.Args[1], "-") {
 		switch os.Args[1] {
+		case "doctor":
+			runDoctor(os.Args[2:])
+			return
 		case "install":
 			if len(os.Args) < 3 {
 				fmt.Println("Usage: moody install <git-url>")
@@ -69,6 +72,7 @@ func main() {
 	listSensors := flag.Bool("list-sensors", false, "List detected sensors and exit")
 	showPacks := flag.Bool("packs", false, "List installed voice packs and exit")
 	showVersion := flag.Bool("version", false, "Print version and exit")
+	jsonOutput := flag.Bool("json", false, "Print machine-readable JSON for diagnostics")
 
 	flag.Usage = func() {
 		fmt.Fprintf(os.Stderr, `moody 🫠 — Your MacBook has feelings.
@@ -128,42 +132,27 @@ Examples:
 	activePack := voiceMgr.ActivePack()
 	packInfo := voiceMgr.GetPackInfo(activePack)
 
-	// Build sensor list
-	allSensors := []sensors.Sensor{}
-
-	if !*noAccel {
-		allSensors = append(allSensors, sensors.NewAccelerometer(*minAmplitude, *cooldown, *fast))
-	}
-	if !*noPower {
-		allSensors = append(allSensors, sensors.NewPower())
-	}
-	if !*noUSB {
-		allSensors = append(allSensors, sensors.NewUSB())
-	}
-	if !*noLid {
-		allSensors = append(allSensors, sensors.NewLid())
-	}
-	if !*noWiFi {
-		allSensors = append(allSensors, sensors.NewWiFi())
-	}
-	if !*noHeadphones {
-		allSensors = append(allSensors, sensors.NewHeadphones())
-	}
-	if !*noDisplay {
-		allSensors = append(allSensors, sensors.NewDisplay())
-	}
-	if !*noAI {
-		allSensors = append(allSensors, sensors.NewAI(*verbose))
-	}
+	allSensors := buildSensors(sensorOptions{
+		minAmplitude: *minAmplitude,
+		cooldownMs:   *cooldown,
+		fastMode:     *fast,
+		verbose:      *verbose,
+		noAccel:      *noAccel,
+		noUSB:        *noUSB,
+		noPower:      *noPower,
+		noLid:        *noLid,
+		noWiFi:       *noWiFi,
+		noHeadphones: *noHeadphones,
+		noDisplay:    *noDisplay,
+		noAI:         *noAI,
+	})
 
 	if *listSensors {
-		fmt.Println("Available sensors:")
-		for _, s := range allSensors {
-			status := "✗ not available"
-			if s.Available() {
-				status = "✓ available"
-			}
-			fmt.Printf("  %-20s %s\n", s.Name(), status)
+		report := newDoctorReport(sensorStatuses(allSensors))
+		if *jsonOutput {
+			writeJSON(report)
+		} else {
+			printSensorList(report.Sensors)
 		}
 		return
 	}
@@ -197,9 +186,10 @@ Examples:
 	// Start sensors
 	activeSensorCount := 0
 	for _, s := range allSensors {
-		if !s.Available() {
+		status := s.Status()
+		if !status.Available {
 			if *verbose {
-				log.Printf("[sensor] %s: not available, skipping", s.Name())
+				log.Printf("[sensor] %s: not available, skipping: %s", s.Name(), status.Reason)
 			}
 			continue
 		}
@@ -216,7 +206,7 @@ Examples:
 	}
 
 	if activeSensorCount == 0 {
-		log.Fatal("No sensors available. Are you running on Apple Silicon with sudo?")
+		log.Fatal("No sensors started. Run `moody doctor` for details.")
 	}
 
 	// Dashboard (optional)

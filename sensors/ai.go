@@ -33,19 +33,43 @@ func (a *AI) Name() string {
 }
 
 func (a *AI) Available() bool {
+	return a.Status().Available
+}
+
+func (a *AI) Status() Status {
+	status := Status{
+		ID:        "ai",
+		Name:      a.Name(),
+		Supported: true,
+		Available: true,
+		Optional:  true,
+		Details:   map[string]string{},
+	}
+
 	// Check if Kiro hooks directory exists
 	homeDir, err := os.UserHomeDir()
 	if err != nil {
-		return false
+		status.Available = false
+		status.Reason = "home directory could not be resolved"
+		status.SuggestedFix = "Set HOME, or start without this sensor using --no-ai"
+		return status
 	}
 
 	kiroHooksDir := filepath.Join(homeDir, ".kiro", "hooks")
-	if _, err := os.Stat(kiroHooksDir); err == nil {
-		return true
+	status.Details["kiroHooksDir"] = "~/.kiro/hooks"
+	info, err := os.Stat(kiroHooksDir)
+	if err != nil {
+		status.Available = false
+		status.Reason = "Kiro hooks directory was not found"
+		status.SuggestedFix = "Install Kiro hooks, or start without this optional sensor using --no-ai"
+		return status
 	}
-
-	// Could also check for Cursor/Windsurf directories
-	return false
+	if !info.IsDir() {
+		status.Available = false
+		status.Reason = "Kiro hooks path exists but is not a directory"
+		status.SuggestedFix = "Fix ~/.kiro/hooks, or start without this optional sensor using --no-ai"
+	}
+	return status
 }
 
 func (a *AI) Start(events chan<- mood.HardwareEvent) error {

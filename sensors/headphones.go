@@ -112,6 +112,8 @@ static int check_headphone_jack(void) {
 */
 import "C"
 import (
+	"fmt"
+	"runtime"
 	"sync"
 	"time"
 	"unsafe"
@@ -133,7 +135,52 @@ func NewHeadphones() *Headphones {
 }
 
 func (h *Headphones) Name() string    { return "Headphones" }
-func (h *Headphones) Available() bool { return true }
+func (h *Headphones) Available() bool { return h.Status().Available }
+
+func (h *Headphones) Status() Status {
+	status := Status{
+		ID:        "headphones",
+		Name:      h.Name(),
+		Supported: runtime.GOOS == "darwin",
+		Available: runtime.GOOS == "darwin",
+		Details:   map[string]string{},
+	}
+	if !status.Supported {
+		status.Reason = "audio route probing is only implemented for macOS"
+		status.SuggestedFix = "Run Moody on macOS, or start without this sensor using --no-headphones"
+		return status
+	}
+
+	outputType := int(C.get_audio_output_type())
+	jackState := int(C.check_headphone_jack())
+	var nameBuf [256]C.char
+	C.get_audio_output_name(&nameBuf[0], 256)
+	name := C.GoString((*C.char)(unsafe.Pointer(&nameBuf[0])))
+	if name == "" {
+		name = "unknown"
+	}
+
+	status.Details["outputDevice"] = name
+	status.Details["outputType"] = audioOutputTypeName(outputType)
+	status.Details["headphoneJackState"] = fmt.Sprintf("%d", jackState)
+	if outputType == 0 {
+		status.Available = false
+		status.Reason = "macOS did not return a default audio output route"
+		status.SuggestedFix = "Check Sound settings, or start without this sensor using --no-headphones"
+	}
+	return status
+}
+
+func audioOutputTypeName(outputType int) string {
+	switch outputType {
+	case 1:
+		return "built-in"
+	case 2:
+		return "external"
+	default:
+		return "unknown"
+	}
+}
 
 func (h *Headphones) Start(events chan<- mood.HardwareEvent) error {
 	h.mu.Lock()

@@ -3,6 +3,7 @@ package sensors
 import (
 	"fmt"
 	"math"
+	"os"
 	"runtime"
 	"sync"
 	"time"
@@ -50,7 +51,44 @@ func NewAccelerometer(minAmplitude float64, cooldownMs int, fast bool) *Accelero
 func (a *Accelerometer) Name() string { return "Accelerometer (Apple Silicon)" }
 
 func (a *Accelerometer) Available() bool {
-	return runtime.GOOS == "darwin" && runtime.GOARCH == "arm64"
+	return a.Status().Available
+}
+
+func (a *Accelerometer) Status() Status {
+	status := Status{
+		ID:        "accelerometer",
+		Name:      a.Name(),
+		Supported: true,
+		Available: true,
+		Details: map[string]string{
+			"os":            runtime.GOOS,
+			"arch":          runtime.GOARCH,
+			"runningAsRoot": fmt.Sprintf("%t", os.Geteuid() == 0),
+		},
+	}
+
+	if runtime.GOOS != "darwin" {
+		status.Supported = false
+		status.Available = false
+		status.Reason = "accelerometer support is only implemented for macOS"
+		status.SuggestedFix = "Run Moody on an Apple Silicon MacBook or start with --no-accel"
+		return status
+	}
+	if runtime.GOARCH != "arm64" {
+		status.Supported = false
+		status.Available = false
+		status.Reason = "accelerometer support requires Apple Silicon"
+		status.SuggestedFix = "Run Moody on an Apple Silicon MacBook or start with --no-accel"
+		return status
+	}
+	if os.Geteuid() != 0 {
+		status.Available = false
+		status.Reason = "accelerometer access requires elevated privileges"
+		status.SuggestedFix = "Run sudo moody, or start without this sensor using --no-accel"
+		return status
+	}
+
+	return status
 }
 
 func (a *Accelerometer) Start(events chan<- mood.HardwareEvent) error {

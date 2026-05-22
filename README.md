@@ -54,6 +54,10 @@ sudo moody --dashboard
 # List available sensors
 sudo moody --list-sensors
 
+# Explain sensor compatibility and fixes
+moody doctor
+moody doctor --json
+
 # Adjust slap sensitivity
 sudo moody --min-amplitude 0.15
 
@@ -137,8 +141,19 @@ sudo moody --spicy
 | `--no-ai` | Disable AI IDE monitoring |
 | `--verbose` | Log all events |
 | `--list-sensors` | Show available sensors |
+| `--json` | Print JSON with `--list-sensors` |
 | `--packs` | List voice packs |
 | `--version` | Print version |
+
+## Diagnostics
+
+```bash
+moody doctor
+moody doctor --json
+```
+
+`doctor` reports OS, architecture, root status, and per-sensor support details.
+If a sensor cannot run, the report includes a reason and suggested fix.
 
 ## AI IDE Integration
 
