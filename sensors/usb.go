@@ -59,6 +59,8 @@ static void get_last_usb_name(char *buf, int bufLen) {
 */
 import "C"
 import (
+	"fmt"
+	"runtime"
 	"sync"
 	"time"
 	"unsafe"
@@ -80,7 +82,24 @@ func NewUSB() *USB {
 }
 
 func (u *USB) Name() string    { return "USB" }
-func (u *USB) Available() bool { return true }
+func (u *USB) Available() bool { return u.Status().Available }
+
+func (u *USB) Status() Status {
+	status := Status{
+		ID:        "usb",
+		Name:      u.Name(),
+		Supported: runtime.GOOS == "darwin",
+		Available: runtime.GOOS == "darwin",
+		Details:   map[string]string{},
+	}
+	if !status.Supported {
+		status.Reason = "USB device probing is only implemented for macOS"
+		status.SuggestedFix = "Run Moody on macOS, or start without this sensor using --no-usb"
+		return status
+	}
+	status.Details["deviceCount"] = fmt.Sprintf("%d", int(C.count_usb_devices()))
+	return status
+}
 
 func (u *USB) Start(events chan<- mood.HardwareEvent) error {
 	u.mu.Lock()

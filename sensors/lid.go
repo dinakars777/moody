@@ -36,6 +36,8 @@ static int get_clamshell_state(void) {
 */
 import "C"
 import (
+	"fmt"
+	"runtime"
 	"sync"
 	"time"
 
@@ -58,8 +60,36 @@ func NewLid() *Lid {
 func (l *Lid) Name() string { return "Lid" }
 
 func (l *Lid) Available() bool {
+	return l.Status().Available
+}
+
+func (l *Lid) Status() Status {
+	status := Status{
+		ID:        "lid",
+		Name:      l.Name(),
+		Supported: runtime.GOOS == "darwin",
+		Available: runtime.GOOS == "darwin",
+		Details:   map[string]string{},
+	}
+	if !status.Supported {
+		status.Reason = "lid state probing is only implemented for macOS"
+		status.SuggestedFix = "Run Moody on a MacBook, or start without this sensor using --no-lid"
+		return status
+	}
+
 	state := int(C.get_clamshell_state())
-	return state >= 0
+	status.Details["clamshellState"] = fmt.Sprintf("%d", state)
+	switch state {
+	case 0:
+		status.Details["lid"] = "open"
+	case 1:
+		status.Details["lid"] = "closed"
+	default:
+		status.Available = false
+		status.Reason = "macOS did not expose a clamshell state"
+		status.SuggestedFix = "Run on a MacBook with a built-in display, or start without this sensor using --no-lid"
+	}
+	return status
 }
 
 func (l *Lid) Start(events chan<- mood.HardwareEvent) error {

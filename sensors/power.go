@@ -56,6 +56,7 @@ static PowerState get_power_state(void) {
 import "C"
 import (
 	"fmt"
+	"runtime"
 	"sync"
 	"time"
 
@@ -76,7 +77,34 @@ func NewPower() *Power {
 }
 
 func (p *Power) Name() string    { return "Power/Battery" }
-func (p *Power) Available() bool { return true } // Always available on macOS
+func (p *Power) Available() bool { return p.Status().Available }
+
+func (p *Power) Status() Status {
+	status := Status{
+		ID:        "power",
+		Name:      p.Name(),
+		Supported: runtime.GOOS == "darwin",
+		Available: runtime.GOOS == "darwin",
+		Details:   map[string]string{},
+	}
+	if !status.Supported {
+		status.Reason = "power source probing is only implemented for macOS"
+		status.SuggestedFix = "Run Moody on macOS, or start without this sensor using --no-power"
+		return status
+	}
+
+	state := C.get_power_state()
+	status.Details["batteryPercent"] = fmt.Sprintf("%d", int(state.battery_pct))
+	status.Details["acConnected"] = fmt.Sprintf("%t", int(state.ac_connected) == 1)
+	status.Details["charging"] = fmt.Sprintf("%t", int(state.is_charging) == 1)
+
+	if int(state.battery_pct) < 0 {
+		status.Available = false
+		status.Reason = "macOS did not return battery information"
+		status.SuggestedFix = "Run on a MacBook with a battery, or start without this sensor using --no-power"
+	}
+	return status
+}
 
 func (p *Power) Start(events chan<- mood.HardwareEvent) error {
 	p.mu.Lock()

@@ -2,6 +2,7 @@ package sensors
 
 import (
 	"os/exec"
+	"runtime"
 	"strings"
 	"sync"
 	"time"
@@ -27,7 +28,41 @@ func NewWiFi() *WiFi {
 func (w *WiFi) Name() string { return "WiFi" }
 
 func (w *WiFi) Available() bool {
-	return w.iface != ""
+	return w.Status().Available
+}
+
+func (w *WiFi) Status() Status {
+	status := Status{
+		ID:        "wifi",
+		Name:      w.Name(),
+		Supported: runtime.GOOS == "darwin",
+		Available: runtime.GOOS == "darwin",
+		Details:   map[string]string{},
+	}
+	if !status.Supported {
+		status.Reason = "WiFi probing is only implemented for macOS"
+		status.SuggestedFix = "Run Moody on macOS, or start without this sensor using --no-wifi"
+		return status
+	}
+	if _, err := exec.LookPath("networksetup"); err != nil {
+		status.Available = false
+		status.Reason = "networksetup was not found"
+		status.SuggestedFix = "Check that macOS command line tools are available, or start without this sensor using --no-wifi"
+		return status
+	}
+	if w.iface == "" {
+		status.Available = false
+		status.Reason = "no WiFi hardware port was found"
+		status.SuggestedFix = "Enable WiFi hardware, or start without this sensor using --no-wifi"
+		return status
+	}
+
+	status.Details["interface"] = w.iface
+	status.Details["connected"] = "false"
+	if getSSID(w.iface) != "" {
+		status.Details["connected"] = "true"
+	}
+	return status
 }
 
 func (w *WiFi) Start(events chan<- mood.HardwareEvent) error {
@@ -112,7 +147,7 @@ func getSSID(iface string) string {
 func detectWiFiInterface() string {
 	out, err := exec.Command("networksetup", "-listallhardwareports").Output()
 	if err != nil {
-		return "en0" // Fallback
+		return ""
 	}
 
 	lines := strings.Split(string(out), "\n")
@@ -134,5 +169,5 @@ func detectWiFiInterface() string {
 		}
 	}
 
-	return "en0" // Fallback
+	return ""
 }
