@@ -69,4 +69,4 @@ brews:
       Use sudo when accelerometer access is needed:
         sudo moody
     test: |
-      system "#{bin}/moody", "--version"
+      system bin/"moody", "--version"
