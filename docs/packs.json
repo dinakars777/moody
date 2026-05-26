@@ -39,6 +39,19 @@
       }
     },
     {
+      "id": "en_dramatic",
+      "label": "Overly Dramatic",
+      "textOnly": true,
+      "responses": {
+        "slap": "\"A blow! From the hand I trusted most!\"",
+        "charger_in": "\"I LIVE BY THE GRACE OF MAGSAFE.\"",
+        "charger_out": "\"SEVERED FROM THE ELECTRIC VEIN.\"",
+        "usb_in": "\"A NEW ALLIANCE IS FORGED IN USB-C.\"",
+        "usb_out": "\"TORN FROM ME MID-SCENE.\"",
+        "lid_close": "\"THE CURTAIN FALLS.\""
+      }
+    },
+    {
       "id": "ja_spicy",
       "label": "Anime (ja_spicy)",
       "textOnly": false,

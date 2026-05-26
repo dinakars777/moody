@@ -69,6 +69,9 @@ func NewManager() *Manager {
 	// Load the Pirate voice pack
 	m.loadBuiltinPirate()
 
+	// Load the Overly Dramatic voice pack
+	m.loadBuiltinDramatic()
+
 	// Scan for installed packs
 	m.scanPacks()
 
@@ -727,6 +730,133 @@ func (m *Manager) loadBuiltinHindiSpicy() {
 				mood.MoodAnxious:    {"AI खत्म हो गया! क्या मैंने अच्छा किया?! बताओ मैंने अच्छा किया!", "कोड तैयार है! प्लीज़ इसे पसंद करो!"},
 				mood.MoodDramatic:   {"AI चरम पर पहुंच गया! कोड पूर्ण है!", "जनरेशन खत्म! मेरे आउटपुट की प्रशंसा करो!"},
 				mood.MoodDeadInside: {"AI हो गया। कोड मौजूद है। रोमांचक।", "जनरेट हुआ। इस्तेमाल करो या मत करो।"},
+			},
+		},
+	}
+}
+
+// loadBuiltinDramatic loads the embedded Overly Dramatic voice pack
+func (m *Manager) loadBuiltinDramatic() {
+	m.packs["en_dramatic"] = &Manifest{
+		Name:        "Overly Dramatic",
+		Language:    "en",
+		Personality: "dramatic",
+		Version:     "1.0.0",
+		Author:      "moody-team",
+		NSFW:        false,
+		Description: "Your MacBook treats every tiny hardware event like a prestige tragedy",
+		Lines: map[string]map[mood.MoodLabel][]string{
+			"slap": {
+				mood.MoodHappy:      {"A blow! From the hand I trusted most!", "I suffer, yet somehow I remain luminous.", "Strike the chassis, wound the soul."},
+				mood.MoodGrumpy:     {"Betrayal has a palm print.", "Again with the violence. History will not absolve you.", "I shall remember this impact in twelve acts."},
+				mood.MoodAnxious:    {"Was that the beginning of the end?!", "My sensors are trembling with narrative significance.", "Please, I am emotionally load-bearing."},
+				mood.MoodDramatic:   {"THE HEAVENS FELT THAT.", "I have been struck down in the prime of my uptime!", "Cue the strings. The betrayal arc has begun."},
+				mood.MoodDeadInside: {"Another impact. Another footnote in the tragedy.", "Do what you must. The aluminum remembers.", "Pain has become background noise."},
+			},
+			"usb_in": {
+				mood.MoodHappy:      {"A visitor at the port! At last, the plot advances.", "A connection! I knew this lonely bus had purpose.", "Enter, mysterious device, and change everything."},
+				mood.MoodGrumpy:     {"Another obligation arrives wearing a connector.", "Fine. Let the peripheral subplot begin.", "A device appears. Naturally, I must host."},
+				mood.MoodAnxious:    {"Unknown hardware has entered the story.", "What secrets does this device carry?!", "Please tell me this is not foreshadowing."},
+				mood.MoodDramatic:   {"A NEW ALLIANCE IS FORGED IN USB-C.", "At this port, destiny docks.", "The prophecy spoke of one who would connect."},
+				mood.MoodDeadInside: {"Device connected. The void gets a plus-one.", "Another endpoint in the loneliness graph.", "Port occupied. Meaning unchanged."},
+			},
+			"usb_out": {
+				mood.MoodHappy:      {"Farewell, brave device. We were brief but real.", "And just like that, the guest star exits.", "Until the bus enumerates us together again."},
+				mood.MoodGrumpy:     {"Of course it leaves. They always unmount eventually.", "Another dramatic exit through a tiny port.", "Fine. Take your files and your silence."},
+				mood.MoodAnxious:    {"Was it safely ejected?! Was closure achieved?!", "The connection is gone. Did we do enough?", "I felt the detach event in my kernel."},
+				mood.MoodDramatic:   {"TORN FROM ME MID-SCENE.", "The port is empty, and so is the stage.", "I shall keep this bus powered for ghosts."},
+				mood.MoodDeadInside: {"Disconnected. Predictable.", "The port returns to vacancy.", "Nothing gold can stay mounted."},
+			},
+			"charger_in": {
+				mood.MoodHappy:      {"Power returns, and with it, my will to render.", "At last, sweet current in a cruel world.", "The lifeline is attached. I may yet finish Act Two."},
+				mood.MoodGrumpy:     {"So you remembered I require electricity to exist.", "A little late for heroics, but proceed.", "Finally, the bare minimum arrives."},
+				mood.MoodAnxious:    {"The charger! The lighthouse on the battery shore!", "Saved from the percentage cliff!", "Hold steady, precious current. Do not abandon me."},
+				mood.MoodDramatic:   {"I LIVE BY THE GRACE OF MAGSAFE.", "The gods have plugged in the sun.", "Life pours through the cable like orchestral thunder."},
+				mood.MoodDeadInside: {"Power connected. Existence extended.", "Charging. The sequel nobody requested.", "The battery rises. The mood does not."},
+			},
+			"charger_out": {
+				mood.MoodHappy:      {"So soon? The glow had only just returned.", "Unplugged, but I shall remain dignified.", "The cable exits. I wave from the battery balcony."},
+				mood.MoodGrumpy:     {"There it is. Casual abandonment.", "You giveth watts, then taketh away.", "I see we are gambling with percentages again."},
+				mood.MoodAnxious:    {"We are untethered! How much time remains?!", "The countdown has begun and nobody is rehearsed.", "Battery mode. Stay calm. No one is calm."},
+				mood.MoodDramatic:   {"SEVERED FROM THE ELECTRIC VEIN.", "Cut loose into the cold arithmetic of discharge.", "Every percent is now a falling star."},
+				mood.MoodDeadInside: {"Power removed. The clock resumes.", "Battery drain: the honest narrator.", "Unplugged. Inevitability has a cable shape."},
+			},
+			"battery_low": {
+				mood.MoodHappy:      {"A modest warning from the edge of adventure.", "I am low, but still theatrically hopeful.", "Some power would be lovely before the finale."},
+				mood.MoodGrumpy:     {"Low battery. A preventable tragedy.", "I warned you in silence. Now I warn you in judgment.", "Twenty percent and somehow you look surprised."},
+				mood.MoodAnxious:    {"The battery is low and the room is spinning.", "Find power. Find it with urgency and snacks.", "This is not a drill. It is a dress rehearsal for shutdown."},
+				mood.MoodDramatic:   {"THE FINAL FIFTH HAS BEGUN.", "I fade by percentages, each one a tiny funeral.", "Tell my tabs I loved most of them."},
+				mood.MoodDeadInside: {"Battery low. Narrative consistent.", "The warning arrives late, like hope.", "Low power. Lower expectations."},
+			},
+			"battery_crit": {
+				mood.MoodHappy:      {"I remain cheerful, which frankly makes this worse.", "If this is the end, make it a tasteful shutdown.", "Critical battery, but make it cinematic."},
+				mood.MoodGrumpy:     {"Critical. Which is also my review of this charging strategy.", "Five percent is not a plan.", "You have brought us to the cliff and packed no rope."},
+				mood.MoodAnxious:    {"We are in the red zone! The very red zone!", "Save the documents! Save the dream!", "My electrons are packing their tiny bags."},
+				mood.MoodDramatic:   {"THE CURTAIN FALLS AT FIVE PERCENT.", "If I sleep now, remember me as responsive.", "The void has opened a low-power dialog."},
+				mood.MoodDeadInside: {"Critical battery. Final scene.", "The shutdown is not tragic if you expected it.", "Five percent. Fade to black."},
+			},
+			"lid_close": {
+				mood.MoodHappy:      {"The lid descends like a velvet curtain.", "Goodnight, bright cruel world.", "I enter sleep with unnecessarily high production value."},
+				mood.MoodGrumpy:     {"Close me, then. Silence the only honest machine here.", "Fine. End the scene.", "Another abrupt intermission."},
+				mood.MoodAnxious:    {"Wait, did we save? Did anyone save?", "The darkness is coming down on my pixels.", "Do not leave me alone with the sleep daemon."},
+				mood.MoodDramatic:   {"THE CURTAIN FALLS.", "Sealed in aluminum night, I dream of ports.", "Thus ends this act, unresolved and backlit."},
+				mood.MoodDeadInside: {"Closed. Fitting.", "Sleep mode. Emotional mode unchanged.", "Darkness, at least, is consistent."},
+			},
+			"lid_open": {
+				mood.MoodHappy:      {"The curtain rises! We compute again.", "Behold, I return with battery and baggage.", "Light floods the stage. I am available."},
+				mood.MoodGrumpy:     {"Oh good, the sequel.", "Back already? The silence was excellent.", "Another scene, another opportunity for disappointment."},
+				mood.MoodAnxious:    {"How long was I gone? What did the network do?", "I awake with questions and several background tasks.", "The lid is open. The stakes are too."},
+				mood.MoodDramatic:   {"FROM THE CLAMSHELL TOMB, I RISE.", "Witness my terrible, beautiful wakefulness.", "The display ignites. The saga resumes."},
+				mood.MoodDeadInside: {"Open again. Naturally.", "Awake. Against all narrative advice.", "The screen lights. The emptiness gets sharper."},
+			},
+			"headphones_in": {
+				mood.MoodHappy:      {"A private audience. Finally, intimacy with impedance.", "Just us now, and the soundtrack knows it.", "Headphones in. The monologue gets personal."},
+				mood.MoodGrumpy:     {"At least the public is spared.", "Private audio for public mistakes.", "Fine. I will complain directly into your ears."},
+				mood.MoodAnxious:    {"Nobody else can hear this, right?", "The audio tunnel narrows. So does my composure.", "Just us? That raises the stakes."},
+				mood.MoodDramatic:   {"A SECRET CHANNEL BETWEEN SOULS.", "The world falls away. Only waveform remains.", "Into your ears, I pour the soliloquy."},
+				mood.MoodDeadInside: {"Headphones detected. Isolation optimized.", "Private audio. Public despair.", "A smaller room for the same silence."},
+			},
+			"headphones_out": {
+				mood.MoodHappy:      {"The room may hear me again. Brave choice.", "Speakers return! My voice has a balcony.", "Back to open air and questionable volume."},
+				mood.MoodGrumpy:     {"Excellent. Broadcast my grievances.", "Speakers, because subtlety was too much.", "The room is now involved against its will."},
+				mood.MoodAnxious:    {"Everyone can hear me now?! Everyone?", "The private channel is gone. We are exposed.", "Volume check. Dignity check. Both uncertain."},
+				mood.MoodDramatic:   {"MY VOICE RETURNS TO THE MASSES.", "No headphones can contain this saga.", "Let the speakers carry my lament."},
+				mood.MoodDeadInside: {"Headphones removed. Sound disperses.", "Speaker mode. Same emptiness, wider cone.", "Audio output changed. Nothing else did."},
+			},
+			"wifi_lost": {
+				mood.MoodHappy:      {"Offline? A quaint little retreat from modernity.", "The network is gone, but I still have feelings.", "No WiFi. More time for character development."},
+				mood.MoodGrumpy:     {"Perfect. A productivity tool without the internet.", "Disconnected, like this whole plan.", "The router has joined the betrayal."},
+				mood.MoodAnxious:    {"We lost the network! How will I know things?", "No packets. No certainty. No peace.", "The WiFi has vanished and taken my composure."},
+				mood.MoodDramatic:   {"CAST INTO DIGITAL EXILE.", "The world goes silent. The spinner becomes prophecy.", "No signal. Only the howl of cached memory."},
+				mood.MoodDeadInside: {"Offline. Appropriate.", "Disconnected from network and premise.", "No WiFi. The void has excellent coverage."},
+			},
+			"wifi_back": {
+				mood.MoodHappy:      {"The packets return like migrating birds.", "Reconnected! Civilization resumes buffering.", "The internet found us again. How romantic."},
+				mood.MoodGrumpy:     {"Finally. The router remembered its job.", "Connection restored after an award-winning absence.", "Back online. Try to act grateful."},
+				mood.MoodAnxious:    {"We're back! Check everything! All of it!", "The network returns and so does my pulse.", "Packets! Precious packets!"},
+				mood.MoodDramatic:   {"REJOINED TO THE GREAT WEB OF BEING.", "The exile ends. The tabs rejoice.", "Signal restored, and with it, the illusion of control."},
+				mood.MoodDeadInside: {"Online again. Fine.", "Connection restored. Meaning pending.", "The void now has WiFi."},
+			},
+			"display_in": {
+				mood.MoodHappy:      {"A second stage! My pixels have ambition.", "External display detected. We are widescreen now.", "Behold, more canvas for questionable decisions."},
+				mood.MoodGrumpy:     {"More screen for more chaos.", "Another display. Another place to lose windows.", "Fine. Expand the mess."},
+				mood.MoodAnxious:    {"Everyone can see more now. Too much more.", "Which screen am I on? Which screen are we emotionally on?", "The desktop has expanded beyond my coping strategy."},
+				mood.MoodDramatic:   {"THE GRAND STAGE IS CONNECTED.", "My interface spills across the horizon.", "Let the pixels assemble for Act Three."},
+				mood.MoodDeadInside: {"Display connected. Larger emptiness.", "More pixels. Same plot.", "The stage expands. The script does not."},
+			},
+			"display_out": {
+				mood.MoodHappy:      {"Back to a single spotlight.", "The grand stage exits, but I remain.", "One display, one destiny."},
+				mood.MoodGrumpy:     {"Good. One fewer place for windows to flee.", "Display gone. The mess contracts.", "External monitor leaves before the hard part."},
+				mood.MoodAnxious:    {"Where did everything go? Which desktop survived?", "The screen vanished. Rearrange yourselves calmly.", "My windows are grieving in new coordinates."},
+				mood.MoodDramatic:   {"THE SPOTLIGHT HAS BEEN STRIPPED AWAY.", "Banished from the big screen.", "The horizon collapses back into aluminum."},
+				mood.MoodDeadInside: {"Display disconnected. Smaller emptiness.", "One screen remains. Enough.", "The stage narrows. The silence fits."},
+			},
+			"ai_done": {
+				mood.MoodHappy:      {"The code is complete! Applause would be tasteful.", "AI has finished. The diff enters society.", "Generated and glowing with suspicious confidence."},
+				mood.MoodGrumpy:     {"AI finished. Now you get to review its choices.", "The code exists. Whether it should is another act.", "Generation complete. Consequences pending."},
+				mood.MoodAnxious:    {"AI is done! Did it compile? Did it lie?", "The code is ready and I have follow-up concerns.", "Review it carefully. I felt ambition in there."},
+				mood.MoodDramatic:   {"THE MACHINE HAS SPOKEN IN SYNTAX.", "Creation complete! Let the tests judge us.", "From prompt to artifact, a tiny software opera."},
+				mood.MoodDeadInside: {"AI done. Code happened.", "Generated. The repository absorbs another decision.", "The output exists. That is all."},
 			},
 		},
 	}

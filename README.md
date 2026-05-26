@@ -125,6 +125,7 @@ sudo moody --spicy
 - `hi_default` — Hindi default pack (SFW)
 - `hi_spicy` — Hindi spicy pack (NSFW 🔞)
 - `en_pirate` — Pirate speak pack (SFW)
+- `en_dramatic` — Overly Dramatic pack (SFW)
 
 ## Options
 
