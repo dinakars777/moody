@@ -4,6 +4,8 @@ Your MacBook has feelings. And it's not afraid to express them.
 
 [Interactive demo](https://dinakars777.github.io/moody/)
 
+![Moody animated dashboard demo](docs/assets/dashboard-demo.gif)
+
 ## What Is This?
 
 Every hardware event triggers a personality response:
